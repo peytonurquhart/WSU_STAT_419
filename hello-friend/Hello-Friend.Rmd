@@ -1,0 +1,152 @@
+---
+title: "Hello Friend"
+author: "Peyton Urquhart [peyton.urquhart]"
+date:  "1/28/2020"
+output: 
+  pdf_document: 
+    fig_caption: yes
+header-includes:
+- \usepackage{caption}
+---
+
+```{r, echo = FALSE}
+setwd("C:/Users/peyton.urquhart/Desktop/School/Junior Semester 2/Stat 419/R/Hello-Friend")
+```
+
+## About Me
+My name is Peyton Urquhart. I'm a junior at Washington State University in Pullman
+Washington, pursuing a B.S in Software Engineering. Throughout my life I have 
+found it to be most efficient to put trust primarily in myself, and what I see 
+with my own eyes. I would not consider myself to be a good listener unless I ask
+a specific question to someone whom I trust to give me the right answer. In many
+cases I would rather sit with a challenging problem for hours than ask somebody
+for help, and that is because I enjoy doing so. I would not consider myself an 
+introvert or an extrovert, but somewhere in between. Work/life balance comes very 
+natural to me. For example, if I spend all day in my room working on a programming
+project, I find myself wanting to invite a friend over and have a conversation.
+If I spend all day with a friend, all I want to do is sit down and work on
+a project alone. I find a similar amount of joy and satisfaction in connecting with
+others as I do solving a problem by myself.
+
+As a child in school, I don't believe I ever really grasped mathematics. I understood
+how to do the problems, I understood that I had to be good at math to graduate
+high school, I understood that to build a house you need to calculate
+angles and areas, but I didn't understand that math was a tool we could use
+to explain each and every aspect of reality.
+
+Being competitive in nature, I have always enjoyed games of all sorts. I like 
+physical games, creative games, games of skill, and games of probability. My 
+introduction to computer programming was in early high school when I
+discovered a YouTube video of somebody modifying the videogame Minecraft. It was 
+interesting to me that he was able to open a file, change some numbers, and
+the behavior of the game was different. From that point forward, I ran my own 
+Minecraft server (which I hosted on my mom's laptop), modified the game to include
+firearms, created a website for my server, implemented an automated credit card payment 
+system for in-game items, and after that was all said and done walked away with
+about $80 more than I started with. Not a very good return for hundreds of hours
+of work, nevertheless, I was hooked on computer programming. More importantly,
+I had a major realization about how one could use math and logic to describe 
+complex systems, a connection I had never made in school.
+
+Currently in my life, I am occupied by my studies. I have a passion for the 
+program I am in and genuinely enjoy every second of it. During my free time, I
+work on my side projects. To name a few, a game-engine written in C++ and OpenGL,
+a stock trading bot in C# interfacing the Alpaca API (not for financial gain, 
+just for fun), a network of Texas Holdem poker game-servers written in Python, and 
+client written in C#. I also enjoy the game of poker and understand it on a deep
+level. Using solid math to put opponents at a disadvantage is a fun idea to me. 
+During the winter I love to downhill ski, and during the summer I love to fish.
+I use the Instacart app to deliver groceries and put half of the profits towards 
+investments and the other half is for some spending money while with friends.
+
+## Background
+My father John Urquhart was raised in Smithtown, New York. Growing up he found
+his peace in the outdoors and dreamed of one day leaving New York to reside in
+a place more suitable for him. When the time came for him to go to college, he 
+packed his bags and left for Missoula, to study Forestry at The University of 
+Montana. During his sophomore year, after taking an optional course in computer 
+science, his interests changed. John switched his major and graduated with a 
+degree in computer science in 1987. Shortly after graduation, he left for 
+Seattle Washington and began working at Boeing, maintaining their payroll system. 
+	
+While living in Seattle, John met my mother Betsy, a lifelong resident of 
+Seattle. Betsy's father Larry also worked as a computer scientist at Boeing. 
+They got Married. My father put a down payment on a duplex to live in with my 
+mother and rented out one of the units in an effort to live at a lower cost. 
+About three years later, on March 27, 2000, I- Peyton John Urquhart, was born. 
+In two more years came my only sibling Cameron Urquhart. My parents had since 
+moved out of the duplex into a family-oriented home in Black Diamond, a small
+city about 30 miles southeast of Seattle.
+	
+Cameron and I were raised in a conservative household. Our grandparents on our 
+mothers side, Larry and Kathy Lee, played a large role in our upbringing. With 
+both my father and grandfather being computer scientists, naturally, I grew up 
+around computers, however, at no point in my childhood was I introduced to 
+computer science. In fact, my most vivid memories growing up are from my 
+experience with the outdoors.
+	
+Each summer, my mother's side of the family held a reunion at Hill's Resort on 
+Priest Lake in northern Idaho. This was and continues to be, my favorite place 
+of all time. Kathy's parents (my great grandparents) rented a whole lodge at 
+the resort for a week in August. Some of my favorite memories are learning to 
+water-ski, taking hikes into the mountains, and building campfires on the beach. 
+My great grandparents have since passed, and the family tradition has come to 
+an end. These memories play a role in who I have become as a person. I consider 
+myself to be adventurous, daring, and family-oriented, with a passion for
+outdoor activity.
+
+```{r, echo = FALSE, out.width = "60%", fig.pos="!h", fig.cap="Priest Lake, ID", fig.align='center'}
+knitr::include_graphics("images/pl.png")
+```
+	
+As the real estate market gained momentum approaching 2006, my father began
+to spend more time planning real estate investments. While working at Boeing, 
+he spent his free time obtaining his real estate license. During this process 
+he met a man named Aaron Cunningham, originally from Spokane Washington. 
+Aaron and himself searched the market for homes to repair and sell for a profit. 
+One day he returned home with news that would change the trajectory of our lives. 
+With hard work and a considerable amount of luck, the pair closed a single deal 
+worth more than my father's entire years salary at Boeing. 
+  
+By early 2007, my father had quit his job to pursue real estate full time. 
+During the housing market crash of 2008, Aaron's other business partners began 
+to alert the pair about an abundant supply of cheap foreclosure properties
+being auctioned in Spokane. As the two of them capitalized on these opportunities
+they spent a greater amount of time in eastern Washington. Eventually, my
+family decided it would be best to move to Spokane. Aaron and his family
+followed.
+  
+When I was twelve my grandpa retired from a successful career at Boeing and 
+my grandparents moved to Spokane along-side us, just seven houses down the street.
+Aaron and my father went on to found their own private-money-lending company 
+called Inland Capital, to assist other short-term real estate investors. I spent 
+the greater portion of my childhood in Spokane, attending elementary, middle, 
+and high school there.
+
+## Future
+I have two important priorities for my future. Number one is financial freedom,
+number two is to get to an environment where I am surrounded by the necessary people,
+and have access to the necessary tools to fuel innovation and create something
+great. I assign these career oriented priorities the highest level of importance 
+because I believe that it is crucial to form personal relationships with like-minded
+individuals, and those individuals are most likely found on the road to a
+common destination.
+
+My ultimate goal is to, like my father, have my own company. It seems to be a
+better quality of life being your own boss, and I would prefer to lead than to 
+follow. I could also see myself being very satisfied working for someone else as
+long as I have a passion for the work and am inspired by the product. The other
+option would be working towards a goal that I fundamentally disagree with, or
+spending large chunks of my life creating a product that I have no passion for.
+To me that is not living, and every day I wake up and work in order to make sure 
+that is not the case.
+
+Specifically, I am actively searching for a summer internship for the summer
+of 2021, and hope to graduate a semester early to start a career as soon as possible.
+
+
+	
+	
+	
+	
+	
