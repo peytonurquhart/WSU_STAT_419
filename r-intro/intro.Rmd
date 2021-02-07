@@ -1,0 +1,41 @@
+---
+title: 'R Notebook: intro'
+author: "Monte J. Shaffer [monte_shaffer]"
+output:
+  html_document:
+    df_print: paged
+---
+
+```{r}
+# github.monte
+which.github = "local";  # local ... remote 
+
+github.local = "C:/_git_/github/TEMPLATE-Pseudo/";
+github.remote = "https://raw..../";
+
+if(which.github == "remote")
+  {
+  include.me = paste0( github.remote, "functions/functions-intro.R");
+  library(devtools);
+  source_url(include.me);
+  } else {
+          include.me = paste0( github.local, "functions/functions-intro.R");
+          source(include.me);
+          }
+```
+
+
+# Handshake
+
+## Function Parameters
+
+## Calculation of plotMe
+
+
+# Alphabet Declaration of Independence
+
+# Determinant of 3x3 matrix
+
+$3 \times 3$
+
+
