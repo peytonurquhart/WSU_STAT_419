@@ -43,6 +43,7 @@ if(which.github == "remote")
 print("Retreived Declaration of Independence at:");
 print(local.draft);
 print(local.final);
+#Now, all declaration drafts are local
 
 ```
 
@@ -88,6 +89,19 @@ the given point with all other points on the circle.
 
 
 # Alphabet Declaration of Independence
+countLowerCaseChars_f(filepath): Counts lower case alphabetical characters in a .txt file and
+returns a data frame. Here it is used to count chars in the Declaration of Independence
+draft and final copies.
+
+Declaration of independence draft table:
+```{r, echo=FALSE}
+countLowerCaseChars_f(local.draft);
+```
+
+Declaration of independence final table:
+```{r, echo=FALSE}
+countLowerCaseChars_f(local.final);
+```
 
 # Determinant of 3x3 matrix
 

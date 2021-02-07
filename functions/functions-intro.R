@@ -1,10 +1,6 @@
-
-# isWholeNumber ... camelCase
-# WhiteSmith indentor ..
-# isClose ...
-# zeroIsh ... 
-
 require("ggplot2")
+
+# HANDSHAKE
 
 # returns True for close enough to integer, false for non-integer
 isWholeNumber = function(x, tol = .Machine$double.eps^0.5)  
@@ -115,9 +111,99 @@ circleData_NonEnclosed = function(center = c(0,0), r = 1, npoints = 100)
 }
 
 
+# DECLARATION
+
+# Count lower case alpha chars in a text file, keep track of $OTHER chars
+# Return a dataframe
+countLowerCaseChars_f = function(filepath)
+{
+  s = readChar(filepath, file.info(filepath)$size);
+  df = countLowerCaseChars_s(s);
+  
+  return(df);
+}
+
+# Count lower case alpha chars in a string, keep track of $OTHER chars
+# Return a dataframe
+countLowerCaseChars_s = function(s)
+{
+  # Create a-z data frame, add column OTHER
+  df <- createAZDataframe();
+  df$OTHER <- 0;
+  
+  # Count each lower case ascii char, update data frame
+  for(i in 1:nchar(s))
+  {
+    ci = substr(s,i,i);
+    if(ci %in% colnames(df))
+    {
+      df[[ci]] <- df[[ci]] + 1;
+      
+    } else if (ci != ' ') {
+      df$OTHER <- df$OTHER + 1;
+    }
+  }
+  return(df);
+}
+
+# Creates data frame with columns a-z, and a single row.
+createAZDataframe = function()
+{
+  alpha <- c(letters[1:26]);
+  df <- as.data.frame(matrix(0, ncol = 26, nrow = 1));
+  
+  for(i in 1:26)
+  {
+    names(df)[i] <- alpha[i];
+  }
+  return(df);
+}
 
 
-# readBin
-# readChar  ... one long string
-# readLines ... vector of lines of strings 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
