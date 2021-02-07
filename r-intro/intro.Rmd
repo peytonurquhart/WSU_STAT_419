@@ -103,6 +103,14 @@ Declaration of independence final table:
 countLowerCaseChars_f(local.final);
 ```
 
+
+```{r, echo=FALSE}
+df1 = countLowerCaseChars_f(local.draft);
+df2 = countLowerCaseChars_f(local.final);
+plotHistogramForAlphabetData(df1, df2);
+```
+
+
 # Determinant of 3x3 matrix
 
 $3 \times 3$

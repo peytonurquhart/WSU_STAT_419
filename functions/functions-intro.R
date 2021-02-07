@@ -113,6 +113,40 @@ circleData_NonEnclosed = function(center = c(0,0), r = 1, npoints = 100)
 
 # DECLARATION
 
+# Plot histogram for a data frame with the columns being the x value.
+plotHistogramForAlphabetData = function(dfdraft, dffinal)
+{
+  alpha <- c(letters[1:26]);
+  
+  # Restructure data for histogram
+  dfd = xyDataframeFromColYDataframe(dfdraft);
+  dff = xyDataframeFromColYDataframe(dffinal);
+  
+  p <- ggplot(dfd, aes(x = idx, y = count)) + geom_bar(stat="identity", position = "dodge");
+  p <- p + geom_text(aes(label=alpha), position=position_dodge(width=0.9), vjust=-0.25);
+  
+  print(p);
+  
+}
+
+# Convert letter-count table to histogram-able data set for declaration problem
+xyDataframeFromColYDataframe = function(df1)
+{
+  alpha = "abcdefghijklmnopqrstuvwxyz";
+  
+  df <- as.data.frame(matrix(0, ncol = 2, nrow = 26));
+  names(df)[1] <- "idx";
+  names(df)[2] <- "count";
+  
+  for(i in 1:26)
+  {
+    ci = substr(alpha,i,i);
+    df$idx[i] <- df$idx[i] + i;
+    df$count[i] <- df$count[i] + df1[[ci]];
+  }
+  return(df);
+}
+
 # Count lower case alpha chars in a text file, keep track of $OTHER chars
 # Return a dataframe
 countLowerCaseChars_f = function(filepath)
@@ -131,7 +165,7 @@ countLowerCaseChars_s = function(s)
   df <- createAZDataframe();
   df$OTHER <- 0;
   
-  # Count each lower case ascii char, update data frame
+  # Count each lower case alpha char, update data frame
   for(i in 1:nchar(s))
   {
     ci = substr(s,i,i);
