@@ -1,5 +1,5 @@
 ---
-title: 'R Notebook: intro'
+title: 'R Notebook: r-intro'
 author: "Peyton Urquhart [peyton.urquhart]"
 output:
   html_document:
@@ -9,8 +9,7 @@ output:
 ```{r}
 
 which.github = "local";
-
-github.local = "C:/_git_/peyton.urquhart/";
+github.local = "C:/_git_/peyton.urquhart/functions/";
 github.remote = "https://raw.githubusercontent.com/peytonurquhart/WSU_STAT_419/main/functions/";
 
 if(which.github == "remote")
@@ -21,13 +20,17 @@ if(which.github == "remote")
   
 } else if (which.github == "local") {
   
-    include.me = paste0( github.local, "functions/functions-intro.R");
+    include.me = paste0( github.local, "functions-intro.R");
     source(include.me);
 }
 ```
 
 
 # Handshake
+
+```{r}
+handShake(n=4, plotMe=TRUE)
+```
 
 ## Function Parameters
 
