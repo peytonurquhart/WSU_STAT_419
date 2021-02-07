@@ -63,8 +63,6 @@ handShake = function(n=1, plotMe=FALSE)
     # draw the plot
     print(p)
   }
-  
-  return(h);
 }
 
 # Given a data frame of x y pairs (col x) (col y) create a 

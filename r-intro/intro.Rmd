@@ -8,11 +8,10 @@ output:
 
 ```{r, echo=FALSE}
 require("ggplot2")
-
 ```
 
 
-```{r}
+```{r, echo=FALSE}
 which.github = "local";
 github.local = "C:/_git_/peyton.urquhart/functions/";
 github.remote = "https://raw.githubusercontent.com/peytonurquhart/WSU_STAT_419/main/functions/";
@@ -32,14 +31,44 @@ if(which.github == "remote")
 
 
 # Handshake
+handShake(n, plotMe) calculates the total number of handshakes that must occur
+between n people such that each individual shakes everybody's hand exactly one time.
+Handshakes may be visualized using plotMe=TRUE.
 
-```{r}
-handShake(n=15, plotMe=TRUE)
+Handshake plot for n = 4 people:
+```{r, echo=FALSE}
+handShake(n=4, plotMe=TRUE)
+```
+
+Handshake plot for n = 8 people:
+```{r, echo=FALSE}
+handShake(n=8, plotMe=TRUE)
+
+```
+
+Handshake plot for n = 24 people:
+```{r, echo=FALSE}
+handShake(n=24, plotMe=TRUE)
 ```
 
 ## Function Parameters
+*  n : Total number of people that must shake everybody's hand exactly once
+
+*  plotMe : Print a plot of the handshake simulation?
 
 ## Calculation of plotMe
+circleData (c(x,y), r, npoints):
+Generates data consisting of n points, each at equal and increasing angles 
+from c (the center) which (when connected) form a circle. This is achieved by
+generating a sequence s of radians (0, ... ,2*PI) in equal intervals, followed
+by two more sequences x,y where x[i] = (c.x + r cos(s[i])) and y[i] = (c.y + r sin(s[i])).
+
+circleData() is called once to plot an initial circle drawn with lines, and once again with
+npoints = n to plot individual points corresponding to each person in the handshake simulation.
+
+Finally, for each individual point on the circle, n - 1 lines are drawn connecting
+the given point with all other points on the circle.
+
 
 # Alphabet Declaration of Independence
 
