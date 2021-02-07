@@ -6,8 +6,13 @@ output:
     df_print: paged
 ---
 
-```{r}
+```{r, echo=FALSE}
+require("ggplot2")
 
+```
+
+
+```{r}
 which.github = "local";
 github.local = "C:/_git_/peyton.urquhart/functions/";
 github.remote = "https://raw.githubusercontent.com/peytonurquhart/WSU_STAT_419/main/functions/";
@@ -29,7 +34,7 @@ if(which.github == "remote")
 # Handshake
 
 ```{r}
-handShake(n=4, plotMe=TRUE)
+handShake(n=12, plotMe=TRUE)
 ```
 
 ## Function Parameters
