@@ -11,15 +11,15 @@ output:
 which.github = "local";
 
 github.local = "C:/_git_/peyton.urquhart/";
-github.remote = "https://raw.../";
+github.remote = "https://raw.githubusercontent.com/peytonurquhart/WSU_STAT_419/main/functions/";
 
 if(which.github == "remote")
 {
-  include.me = paste0( github.remote, "functions/functions-intro.R");
+  include.me = paste0( github.remote, "functions-intro.R");
   library(devtools)
   source_url(include.me);
   
-} else if (which.github == local) {
+} else if (which.github == "local") {
   
     include.me = paste0( github.local, "functions/functions-intro.R");
     source(include.me);
@@ -32,7 +32,6 @@ if(which.github == "remote")
 ## Function Parameters
 
 ## Calculation of plotMe
-
 
 # Alphabet Declaration of Independence
 
