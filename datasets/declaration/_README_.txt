@@ -1,0 +1,2 @@
+declaration of independence draft found here: https://www.loc.gov/exhibits/declara/ruffdrft.html
+declaration of independence final found here: https://www.archives.gov/founding-docs/declaration-transcript
