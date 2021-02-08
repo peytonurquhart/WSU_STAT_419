@@ -1,6 +1,6 @@
 require("ggplot2")
 
-# HANDSHAKE
+# HANDSHAKE --------------------------------------------------------------------
 
 # returns True for close enough to integer, false for non-integer
 isWholeNumber = function(x, tol = .Machine$double.eps^0.5)  
@@ -111,10 +111,11 @@ circleData_NonEnclosed = function(center = c(0,0), r = 1, npoints = 100)
 }
 
 
-# DECLARATION
+# DECLARATION ------------------------------------------------------------------
+
 
 # Plot histogram for a data frame with the columns being the x value.
-plotHistogramForAlphabetData = function(df, name)
+plotHistogramForDeclrData = function(df, name)
 {
   alpha <- c(letters[1:26]);
   
@@ -122,10 +123,10 @@ plotHistogramForAlphabetData = function(df, name)
   dfd = xyDataframeFromColYDataframe(df);
   
   p <- ggplot(dfd, aes(x = idx, y = count)) + geom_bar(stat="identity", position = "dodge");
-  p <- p + geom_text(aes(label=alpha), position=position_dodge(width=0.9), vjust=-2.0);
-  p <- p + geom_text(aes(label=count), position=position_dodge(width=0.9), vjust=-0.25);
   p <- p + ylim(0, 1200);
   p <- p + ggtitle(name);
+  p <- p + geom_text(aes(label=alpha), position=position_dodge(width=0.9), vjust=-2.0);
+  p <- p + geom_text(aes(label=count), position=position_dodge(width=0.9), vjust=-0.25);
   
   print(p);
 }
@@ -153,7 +154,7 @@ xyDataframeFromColYDataframe = function(df1)
 countLowerCaseChars_f = function(filepath)
 {
   s = readChar(filepath, file.info(filepath)$size);
-  df = countLowerCaseChars_s(s);
+  df = countLowerCaseChars_s(tolower(s));
   
   return(df);
 }
@@ -192,6 +193,45 @@ createAZDataframe = function()
     names(df)[i] <- alpha[i];
   }
   return(df);
+}
+
+# DET MATRIX -------------------------------------------------------------------
+
+det_2x2 = function(mat)
+{
+  return((mat[1,1] * mat[2,2]) - (mat[1,2] * mat[2,1]));
+}
+
+det_3x3 = function(mat, print=FALSE)
+{
+  efhi = matrix(0, ncol = 2, nrow = 2);
+  dfgi = matrix(0, ncol = 2, nrow = 2);
+  degh = matrix(0, ncol = 2, nrow = 2);
+  
+  efhi[1,1] = mat[2,2];
+  efhi[1,2] = mat[2,3];
+  efhi[2,1] = mat[3,2];
+  efhi[2,2] = mat[3,3];
+  
+  dfgi[1,1] = mat[2,1];
+  dfgi[1,2] = mat[2,3];
+  dfgi[2,1] = mat[3,1];
+  dfgi[2,2] = mat[3,3];
+  
+  degh[1,1] = mat[2,1];
+  degh[1,2] = mat[2,2];
+  degh[2,1] = mat[3,1];
+  degh[2,2] = mat[3,2];
+  
+  if(print==TRUE)
+  {
+    print(mat);
+    print(efhi);
+    print(dfgi);
+    print(degh);
+  }
+  
+  return((mat[1,1]*(det_2x2(efhi))) - (mat[1,2]*(det_2x2(dfgi))) + (mat[1,3]*(det_2x2(degh))));
 }
 
 
