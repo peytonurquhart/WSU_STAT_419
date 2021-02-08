@@ -107,7 +107,9 @@ countLowerCaseChars_f(local.final);
 ```{r, echo=FALSE}
 df1 = countLowerCaseChars_f(local.draft);
 df2 = countLowerCaseChars_f(local.final);
-plotHistogramForAlphabetData(df1, df2);
+
+plotHistogramForAlphabetData(df1, "Draft");
+plotHistogramForAlphabetData(df2, "Final");
 ```
 
 

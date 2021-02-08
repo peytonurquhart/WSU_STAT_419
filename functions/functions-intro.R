@@ -114,19 +114,20 @@ circleData_NonEnclosed = function(center = c(0,0), r = 1, npoints = 100)
 # DECLARATION
 
 # Plot histogram for a data frame with the columns being the x value.
-plotHistogramForAlphabetData = function(dfdraft, dffinal)
+plotHistogramForAlphabetData = function(df, name)
 {
   alpha <- c(letters[1:26]);
   
   # Restructure data for histogram
-  dfd = xyDataframeFromColYDataframe(dfdraft);
-  dff = xyDataframeFromColYDataframe(dffinal);
+  dfd = xyDataframeFromColYDataframe(df);
   
   p <- ggplot(dfd, aes(x = idx, y = count)) + geom_bar(stat="identity", position = "dodge");
-  p <- p + geom_text(aes(label=alpha), position=position_dodge(width=0.9), vjust=-0.25);
+  p <- p + geom_text(aes(label=alpha), position=position_dodge(width=0.9), vjust=-2.0);
+  p <- p + geom_text(aes(label=count), position=position_dodge(width=0.9), vjust=-0.25);
+  p <- p + ylim(0, 1200);
+  p <- p + ggtitle(name);
   
   print(p);
-  
 }
 
 # Convert letter-count table to histogram-able data set for declaration problem
