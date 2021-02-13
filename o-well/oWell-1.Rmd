@@ -13,6 +13,7 @@ github.remote = "https://raw.githubusercontent.com/peytonurquhart/WSU_STAT_419/m
 
 local.metals = paste0( github.local, "datasets/o-well/wells-metals.csv");
 local.chem = paste0( github.local, "datasets/o-well/wells-chemistry.csv");
+local.wellsRDS = paste0( github.local, "datasets/o-well/wells.rds");
 
 if(which.github == "remote")
 {
@@ -26,6 +27,7 @@ if(which.github == "remote")
   include.chem = paste0( github.remote, "datasets/o-well/wells-chemistry.csv");
   local.metals = paste0(dirname(getActiveDocumentContext()$path), "/wells-metals.csv")
   local.chem = paste0(dirname(getActiveDocumentContext()$path), "/wells-chemistry.csv");
+  local.wellsRDS = paste0(dirname(getActiveDocumentContext()$path), "/wells.RDS");
   download.file(url=include.metals, destfile=local.metals, method='curl');
   download.file(url=include.chem, destfile=local.chem, method='curl');
   
@@ -38,6 +40,66 @@ if(which.github == "remote")
 print("Retreived Well Datasets At:");
 print(local.metals);
 print(local.chem);
-#Now, all declaration drafts are local
-
+#Now, all well csv data it local
 ```
+
+# Gathering Well Data
+Well data is stored in a Comma Separated Values files (.csv), it can then be directly 
+read into a dataframe using the read.csv() function.
+All necessary data was added to the .csv files prior to reading the data to a dataframe.
+
+# Well Data
+owell.metals contains data of dissolved metals detected in water-samples from wells
+1-23 in ug/L.
+
+owell.chemistry contains datapoints for physical and chemical paramaters
+in ground-water samples from wells 1-23 in mg/L.
+
+Additionally, each dataset includes location and altitude (Feet) for the wells, approximate
+distance from the nearest fault-line (Meters) and the surrounding geology.
+
+owell.metals:
+```{r}
+owell.metals = readWellCsvData(local.metals);
+```
+
+owell.chemistry:
+```{r}
+owell.chemistry = readWellCsvData(local.chem);
+```
+
+owell.metals and owell.chemistry are placed into a list to be refrenced by
+wells\$saudi\$chemistry and wells\$saudi\$metals
+```{r, echo=FALSE}
+wells <- list(saudi=NULL);
+wells$saudi <- list(chemistry=owell.chemistry, metals=owell.metals);
+print(wells);
+```
+
+The list of well data frames is then saved to wells.rds
+```{r}
+saveRDS(wells, file = local.wellsRDS);
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
