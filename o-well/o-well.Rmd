@@ -1,0 +1,43 @@
+---
+title: 'R Notebook: o-well'
+author: "Peyton Urquhart [peyton.urquhart]"
+output:
+  html_document:
+    df_print: paged
+---
+
+```{r, echo=FALSE}
+which.github = "local";
+github.local = "C:/_git_/peyton.urquhart/";
+github.remote = "https://raw.githubusercontent.com/peytonurquhart/WSU_STAT_419/main/";
+
+local.metals = paste0( github.local, "datasets/o-well/wells-metals.csv");
+local.chem = paste0( github.local, "datasets/o-well/wells-chemistry.csv");
+
+if(which.github == "remote")
+{
+  include.me = paste0( github.remote, "functions/functions-owell.R");
+  library(devtools)
+  library(rstudioapi)
+  source_url(include.me);
+  
+  # Download data to working directory if using remotely
+  include.metals = paste0( github.remote, "datasets/o-well/wells-metals.csv");
+  include.chem = paste0( github.remote, "datasets/o-well/wells-chemistry.csv");
+  local.metals = paste0(dirname(getActiveDocumentContext()$path), "/wells-metals.csv")
+  local.chem = paste0(dirname(getActiveDocumentContext()$path), "/wells-chemistry.csv");
+  download.file(url=include.metals, destfile=local.metals, method='curl');
+  download.file(url=include.chem, destfile=local.chem, method='curl');
+  
+} else if (which.github == "local") {
+  
+    include.me = paste0( github.local, "functions/functions-owell.R");
+    source(include.me);
+}
+
+print("Retreived Well Datasets At:");
+print(local.metals);
+print(local.chem);
+#Now, all declaration drafts are local
+
+```
