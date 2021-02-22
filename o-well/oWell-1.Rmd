@@ -7,6 +7,7 @@ output:
 ---
 
 ```{r, echo=FALSE}
+require("ggplot2")
 which.github = "local";
 github.local = "C:/_git_/peyton.urquhart/";
 github.remote = "https://raw.githubusercontent.com/peytonurquhart/WSU_STAT_419/main/";
@@ -74,17 +75,28 @@ wells\$saudi\$chemistry and wells\$saudi\$metals
 wells <- list(saudi=NULL);
 wells$saudi <- list(chemistry=owell.chemistry, metals=owell.metals);
 print(wells);
-```
-
-The list of well data frames is then saved to wells.rds
-```{r}
 saveRDS(wells, file = local.wellsRDS);
 ```
 
+Average metal content in the water for wells 1-23:
+```{r, echo=FALSE}
+plotMeanMetalsForWellData(wells$saudi$metals);
+```
 
+Standard deviation for metal content in the water for wells 1-23:
+```{r, echo=FALSE}
+plotStDevMetalsForWellData(wells$saudi$metals);
+```
 
+Average chemical content in the water for wells 1-23:
+```{r, echo=FALSE}
+plotMeanChemForWellData(wells$saudi$chemistry);
+```
 
-
+Standard deviation for chemical content in the water for wells 1-23:
+```{r, echo=FALSE}
+plotStDevChemForWellData(wells$saudi$chemistry);
+```
 
 
 
