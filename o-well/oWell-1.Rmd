@@ -83,9 +83,9 @@ Average metal content in the water for wells 1-23:
 plotMeanMetalsForWellData(wells$saudi$metals);
 ```
 
-Standard deviation for metal content in the water for wells 1-23:
+Coefficient of Variance for metal content in the water for wells 1-23:
 ```{r, echo=FALSE}
-plotStDevMetalsForWellData(wells$saudi$metals);
+plotCVMetalsForWellData(wells$saudi$metals);
 ```
 
 Average chemical content in the water for wells 1-23:
@@ -93,9 +93,9 @@ Average chemical content in the water for wells 1-23:
 plotMeanChemForWellData(wells$saudi$chemistry);
 ```
 
-Standard deviation for chemical content in the water for wells 1-23:
+Coefficient of Variance for chemical content in the water for wells 1-23:
 ```{r, echo=FALSE}
-plotStDevChemForWellData(wells$saudi$chemistry);
+plotCVChemForWellData(wells$saudi$chemistry);
 ```
 
 

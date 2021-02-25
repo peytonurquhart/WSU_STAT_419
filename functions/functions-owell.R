@@ -4,7 +4,7 @@ library(reshape2)
 plotStDevMetalsForWellData = function(metalsDf)
 {
   # Remove the unneeded columns from the dataframe
-  for(i in 16:20)
+  for(i in 16:21)
   {
     metalsDf <- metalsDf[-c(16)];
   }
@@ -15,7 +15,7 @@ plotStDevMetalsForWellData = function(metalsDf)
 plotMeanMetalsForWellData = function(metalsDf)
 {
   # Remove the unneeded columns from the dataframe
-  for(i in 16:20)
+  for(i in 16:21)
   {
     metalsDf <- metalsDf[-c(16)];
   }
@@ -23,11 +23,22 @@ plotMeanMetalsForWellData = function(metalsDf)
   plotSingleRowBarChart(dfx, "Metal", "Mean", "Mean Metal Water Content in ug/L");
 }
 
+plotCVMetalsForWellData = function(metalsDf)
+{
+  # Remove the unneeded columns from the dataframe
+  for(i in 16:21)
+  {
+    metalsDf <- metalsDf[-c(16)];
+  }
+  dfx = createCVDataFrame(metalsDf);
+  plotSingleRowBarChart(dfx, "Metal", "CV", "Coefficient of Variance for Metal Water Content");
+}
+
 
 plotMeanChemForWellData = function(chemDf)
 {
   # Remove the unneeded columns from the dataframe
-  for(i in 21:25)
+  for(i in 21:26)
   {
     chemDf <- chemDf[-c(21)];
   }
@@ -39,12 +50,23 @@ plotMeanChemForWellData = function(chemDf)
 plotStDevChemForWellData = function(chemDf)
 {
   # Remove the unneeded columns from the dataframe
-  for(i in 21:25)
+  for(i in 21:26)
   {
     chemDf <- chemDf[-c(21)];
   }
   dfx = createStDevDataFrame(chemDf);
   plotSingleRowBarChart(dfx, "Chemistry", "Standard Deviation", "Standard Deviation for Chemical Water Content: n=23");
+}
+
+plotCVChemForWellData = function(chemDf)
+{
+  # Remove the unneeded columns from the dataframe
+  for(i in 21:26)
+  {
+    chemDf <- chemDf[-c(21)];
+  }
+  dfx = createCVDataFrame(chemDf);
+  plotSingleRowBarChart(dfx, "Chemistry", "CV", "Coefficient of Variance for Chemical Water Content");
 }
 
 
@@ -98,6 +120,23 @@ createStDevDataFrame = function(df)
   {
     names(dfm)[i] = names(df)[i];
     dfm[1,i] = sd(df[,i]);
+  }
+  return(dfm);
+}
+
+# Create a dataframe for coefficient of variance of columns in df, using same column names
+createCVDataFrame = function(df)
+{
+  n = 0;
+  for(i in names(df))
+  {
+    n = n + 1;
+  }
+  dfm <- as.data.frame(matrix(0, ncol = n, nrow = 1));
+  for(i in 1:n)
+  {
+    names(dfm)[i] = names(df)[i];
+    dfm[1,i] = (sd(df[,i]) / mean(df[,i]));
   }
   return(dfm);
 }
