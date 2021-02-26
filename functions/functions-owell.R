@@ -70,7 +70,72 @@ plotCVChemForWellData = function(chemDf)
 }
 
 
+plotHgContentVsSand = function(metalsDf)
+{
+  df <- as.data.frame(matrix(0, ncol = 2, nrow = 3));
+  
+  names(df)[1] = "type"
+  names(df)[2] = "mean.Hg"
+  df[1,1] = "Sandy"
+  df[2,1] = "Partly Sandy"
+  df[3,1] = "Not Sandy"
+  
+  numSandy = 0;
+  numPartSandy = 0;
+  numNotSandy = 0;
+  
+  for(i in 1:23)
+  {
+    st = metalsDf[i,17]
+    if(st == "Sand")
+    {
+      df[1,2] <- df[1,2] + metalsDf[i,10]
+      numSandy = numSandy + 1;
+    } 
+    else if (grepl("Sand",st, fixed = TRUE) && !grepl("Sandstone",st, fixed = TRUE))
+    {
+      df[2,2] <- df[2,2] + metalsDf[i,10]
+      numPartSandy = numPartSandy + 1;
+    }
+    else
+    {
+      df[3,2] <- df[3,2] + metalsDf[i,10]
+      numNotSandy = numNotSandy + 1;
+    }
+  }
+  
+  df[1,2] <- df[1,2] / numSandy;
+  df[2,2] <- df[2,2] / numPartSandy;
+  df[3,2] <- df[3,2] / numNotSandy;
+  
+  p <- ggplot(df, aes(x = type, y = mean.Hg)) + geom_bar(stat="identity", position = "dodge");
+  p <- p + ggtitle("Hg Content vs Sandy Geology") + ylab("Mean Hg (ug/L)") + xlab("Geology");
+  
+  suppressWarnings(suppressMessages(print(p)));
+}
+
+
 # Helper Functions -------------------------------------------------------------
+
+
+# Plot the pearson correlation for cols 'xc' vs 'yc' in dataframe df
+plotPearsonCorrelation = function(df, xc, yc, s_title, x_lab, y_lab)
+{
+  s_r = sprintf("%0.3f",(cor(xc, yc ,method = "pearson")));
+  s_r = paste0("r = ", s_r);
+  
+  p <- ggplot(df, aes(x=xc, y=yc)) 
+  p <- p + geom_point() 
+  p <- p + ggtitle(s_title) 
+  p <- p + geom_smooth(method=lm, se=FALSE) 
+  p <- p + scale_x_continuous(name = x_lab, limits = c(min(xc), max(xc))) 
+  p <- p + scale_y_continuous(name = y_lab, limits = c(min(yc), max(yc))) 
+  p <- p + theme(plot.title = element_text(hjust = 0.5), panel.background = element_blank(), axis.line = element_line(color="black"), axis.line.x = element_line(color="black")) 
+  p <- p + theme_bw()
+  p <- p + geom_text(x=(max(xc) / 1.2), y=(max(yc) / 1.2), label=s_r)
+  
+  suppressWarnings(suppressMessages(print(p)));
+}
 
 
 # Given a data frame with single row, create a bar chart
@@ -86,7 +151,7 @@ plotSingleRowBarChart = function(dfMeans, s_xname, s_yname, title, print=TRUE)
   
   if(print)
   {
-    print(p);
+    suppressWarnings(suppressMessages(print(p)));
   }
 }
 

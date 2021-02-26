@@ -56,16 +56,15 @@ owell.metals contains data of dissolved metals detected in water-samples from we
 owell.chemistry contains datapoints for physical and chemical paramaters
 in ground-water samples from wells 1-23 in mg/L.
 
-Additionally, each dataset includes location and altitude (Feet) for the wells, approximate
-distance from the nearest fault-line (Meters) and the surrounding geology.
+Additionally, each dataset includes location and altitude (Feet) for the wells, 
+approximate distance from the nearest fault-line (Meters), approximate distance 
+from the saltwater gulf (Meters), and the surrounding geology.
 
-owell.metals:
-```{r}
+```{r, echo=FALSE}
 owell.metals = readWellCsvData(local.metals);
 ```
 
-owell.chemistry:
-```{r}
+```{r, echo=FALSE}
 owell.chemistry = readWellCsvData(local.chem);
 ```
 
@@ -74,33 +73,64 @@ wells\$saudi\$chemistry and wells\$saudi\$metals
 ```{r, echo=FALSE}
 wells <- list(saudi=NULL);
 wells$saudi <- list(chemistry=owell.chemistry, metals=owell.metals);
-print(wells);
+#print(wells);
 saveRDS(wells, file = local.wellsRDS);
 ```
 
-Average metal content in the water for wells 1-23:
+## Mean Water Contents
+
 ```{r, echo=FALSE}
 plotMeanMetalsForWellData(wells$saudi$metals);
 ```
 
-Coefficient of Variance for metal content in the water for wells 1-23:
-```{r, echo=FALSE}
-plotCVMetalsForWellData(wells$saudi$metals);
-```
-
-Average chemical content in the water for wells 1-23:
 ```{r, echo=FALSE}
 plotMeanChemForWellData(wells$saudi$chemistry);
 ```
 
-Coefficient of Variance for chemical content in the water for wells 1-23:
+## Coefficients of Variance for Water Contents
+
+```{r, echo=FALSE}
+plotCVMetalsForWellData(wells$saudi$metals);
+```
+
 ```{r, echo=FALSE}
 plotCVChemForWellData(wells$saudi$chemistry);
 ```
 
 
+# Mercury Content in Well Water
+
+"The U.S. Environmental Protection Agency (EPA) sets a Maximum Contaminant 
+Level (MCL) for mercury in drinking water of 0.002 mg/L" (https://epi.dph.ncdhhs.gov/).
+
+In other words, It has been determined that a concentration of Hg greater than
+2 micrograms per liter (ug/L) is potentially unsafe for drinking.
+
+From the above data, the mean Hg content for wells 1-23 is 10 ug/L (about than
+5 times what is considered safe) and the coefficient of variance is high. This
+indicates that there are outside factors which significantly influence concentration
+of Hg in the water and may bring it to dangerous levels.
 
 
+
+```{r, echo=FALSE}
+df = wells$saudi$metals
+plotPearsonCorrelation(df, df$dist.gulf, df$Hg, "Distance from Gulf vs Hg Content: Pearson Correlation", "Dist. Gulf (M)", "Hg (ug/L)");
+```
+
+There is a weak correlation between a wells distance from the gulf, and
+its mercury content. As wells become closer to the gulf, there appears to be a 
+greater probability for very high levels of mercury in a water sample.
+
+This can be further explored by examining mercury content based on a wells
+sandy/not sandy surrounding geology. Perhaps, water from the gulf seeking into
+the source for the well becomes more prominent when the type of soil is sandy
+as opposed to rocky.
+
+
+```{r, echo=FALSE}
+plotHgContentVsSand(wells$saudi$metals);
+```
 
 
 
