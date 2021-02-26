@@ -34,7 +34,6 @@ plotCVMetalsForWellData = function(metalsDf)
   plotSingleRowBarChart(dfx, "Metal", "CV", "Coefficient of Variance for Metal Water Content");
 }
 
-
 plotMeanChemForWellData = function(chemDf)
 {
   # Remove the unneeded columns from the dataframe
@@ -45,7 +44,6 @@ plotMeanChemForWellData = function(chemDf)
   dfx = createMeanDataFrame(chemDf);
   plotSingleRowBarChart(dfx, "Chemistry", "Mean", "Mean Chemical Water Content in mg/L");
 }
-
 
 plotStDevChemForWellData = function(chemDf)
 {
@@ -68,7 +66,6 @@ plotCVChemForWellData = function(chemDf)
   dfx = createCVDataFrame(chemDf);
   plotSingleRowBarChart(dfx, "Chemistry", "CV", "Coefficient of Variance for Chemical Water Content");
 }
-
 
 plotHgContentVsSand = function(metalsDf)
 {
@@ -136,7 +133,6 @@ plotPearsonCorrelation = function(df, xc, yc, s_title, x_lab, y_lab)
   
   suppressWarnings(suppressMessages(print(p)));
 }
-
 
 # Given a data frame with single row, create a bar chart
 plotSingleRowBarChart = function(dfMeans, s_xname, s_yname, title, print=TRUE)

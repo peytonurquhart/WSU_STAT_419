@@ -133,8 +133,32 @@ plotHgContentVsSand(wells$saudi$metals);
 ```
 
 
+# Sodium Content in Well Water
 
+It is logical to think that when wells are closer to the saltwater gulf, there
+will be a greater concentration of sodium found. A test for this correlation
+returns a weak correlation coefficient between these two variables.
 
+Interestingly, a much stronger correlation is found for Na Content vs Distance
+from Fault-Line. I speculate that this is because wells that are close to a fault are
+exposed to fresh flowing groundwater which is rapidly replenished, reducing
+the amount of stagnating saltwater from the gulf.
+
+```{r, echo=FALSE}
+df = wells$saudi$chemistry
+plotPearsonCorrelation(df, df$dist.gulf, df$Na, "Distance from Gulf vs Na Content: Pearson Correlation", "Dist. Gulf (M)", "Na (mg/L)");
+plotPearsonCorrelation(df, df$fault, df$Na, "Distance from Fault-Line vs Na Content: Pearson Correlation", "Dist. Fault (M)", "Na (mg/L)");
+```
+
+Although drinking saltwater does not put anyone in immediate danger, drinking
+1 gallon of water from the most sodium-concentrated well in the data set, would
+subject a person to about 6 times a healthy daily allowance of sodium.
+
+# Conclusion
+
+The data leads me to believe that there should be an emphasis on placing wells
+directly on a fault-line. There is also evidence that placing wells very near 
+the saltwater gulf could lead to hazardous metals in the water.
 
 
 
