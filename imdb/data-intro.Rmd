@@ -11,17 +11,16 @@ require("ggplot2")
 ```
 
 ```{r}
+github.local = "C:/_git_/peyton.urquhart/";
+github.remote = "https://raw.githubusercontent.com/peytonurquhart/WSU_STAT_419/main/";
+script = "functions/functions-imdb.R";
+
 # change this
 which.github = "local";
 #which.github = "remote";
 ```
 
 ```{r, echo=FALSE}
-github.local = "C:/_git_/peyton.urquhart/";
-github.remote = "https://raw.githubusercontent.com/peytonurquhart/WSU_STAT_419/main/";
-
-scipt = paste0( github.local, "funtions/funtions-imdb.R");
-
 if(which.github == "remote")
 {
   include.me = paste0( github.remote, script);
@@ -31,7 +30,7 @@ if(which.github == "remote")
   
 } else if (which.github == "local") {
   
-    include.me = paste0( github.local, "functions/functions-imdb.R");
+    include.me = paste0( github.local, script);
     source(include.me);
 }
 ```
@@ -83,9 +82,22 @@ Denzel Washingtons movies.
 denzel.df <- list(movies = IMDB.getMoviesForPerson("nm0000243"), info = IMDB.getPersonInfo("nm0000243"));
 denzel.df$movies;
 denzel.df$info;
-
-test77();
 ```
+
+## Common Movies
+
+Search the dataframes for matching ttid(s). Build a new dataframe for each match
+resulting in a dataframe of movies starring both Will and Denzel
+
+```{r}
+findCommonMovies(will.df$movies, denzel.df$movies);
+```
+
+
+## Summary
+
+
+
 
 
 

@@ -173,7 +173,11 @@ pre code {
 
 
 <pre><code>## Loading required package: ggplot2</code></pre>
-<pre class="r"><code># change this
+<pre class="r"><code>github.local = &quot;C:/_git_/peyton.urquhart/&quot;;
+github.remote = &quot;https://raw.githubusercontent.com/peytonurquhart/WSU_STAT_419/main/&quot;;
+script = &quot;functions/functions-imdb.R&quot;;
+
+# change this
 which.github = &quot;local&quot;;
 #which.github = &quot;remote&quot;;</code></pre>
 <pre class="r"><code>#install.packages(&quot;C:/_git_/humanVerseWSU/humanVerseWSU_0.1.4.zip&quot;, repos=NULL, type=&quot;source&quot;);
@@ -219,8 +223,20 @@ denzel.df$movies;</code></pre>
 {"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["nmid"],"name":[1],"type":["chr"],"align":["left"]},{"label":["name"],"name":[2],"type":["chr"],"align":["left"]},{"label":["roles"],"name":[3],"type":["chr"],"align":["left"]},{"label":["born.when"],"name":[4],"type":["chr"],"align":["left"]},{"label":["born.where"],"name":[5],"type":["chr"],"align":["left"]},{"label":["died.when"],"name":[6],"type":["chr"],"align":["left"]},{"label":["died.where"],"name":[7],"type":["chr"],"align":["left"]},{"label":["starmeter.rank"],"name":[8],"type":["int"],"align":["right"]},{"label":["starmeter.delta"],"name":[9],"type":["int"],"align":["right"]},{"label":["bio"],"name":[10],"type":["chr"],"align":["left"]}],"data":[{"1":"nm0000243","2":"Denzel Washington","3":"Actor,Producer,Director","4":"1954-12-28","5":"Mount Vernon, New York, USA","6":"NA","7":"NA","8":"500","9":"-64","10":"Denzel Hayes Washington, Jr. was born on December 28, 1954 in Mount Vernon, New York. He is the middle of three children of a beautician mother, Lennis, from Georgia, and a Pentecostal minister father, Denzel Washington, Sr., from Virginia. After graduating from high school, Denzel enrolled at Fordham University, intent on a career in journalism. ...","_rn_":"243"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
-<pre class="r"><code>test77();</code></pre>
-<pre><code>## [1] &quot;testing&quot;</code></pre>
+</div>
+<div id="common-movies" class="section level2">
+<h2>Common Movies</h2>
+<p>Search the dataframes for matching ttid(s). Build a new dataframe for each match resulting in a dataframe of movies starring both Will and Denzel</p>
+<pre class="r"><code>findCommonMovies(will.df$movies, denzel.df$movies);</code></pre>
+<pre><code>## [1] &quot;1 common movie found&quot;</code></pre>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["ttid"],"name":[1],"type":["chr"],"align":["left"]},{"label":["nmid"],"name":[2],"type":["chr"],"align":["left"]},{"label":["rank"],"name":[3],"type":["int"],"align":["right"]},{"label":["year"],"name":[4],"type":["int"],"align":["right"]},{"label":["title"],"name":[5],"type":["chr"],"align":["left"]},{"label":["genre"],"name":[6],"type":["chr"],"align":["left"]},{"label":["rated"],"name":[7],"type":["chr"],"align":["left"]},{"label":["minutes"],"name":[8],"type":["int"],"align":["right"]},{"label":["ratings"],"name":[9],"type":["dbl"],"align":["right"]},{"label":["metacritic"],"name":[10],"type":["int"],"align":["right"]},{"label":["votes"],"name":[11],"type":["int"],"align":["right"]},{"label":["millions"],"name":[12],"type":["dbl"],"align":["right"]},{"label":["paragraph"],"name":[13],"type":["chr"],"align":["left"]}],"data":[{"1":"tt1546668","2":"nm0000243","3":"54","4":"2007","5":"The 100 Best Black Movies (Ever)","6":"Documentary","7":"NA","8":"NA","9":"5","10":"NA","11":"NA","12":"NA","13":"<a href=\"/updates?update=tt1546668%3Aoutlines.add.1&amp;ref_=tt_ov_cn_pl\">Add a Plot<\/a>","_rn_":"51"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+<div id="summary" class="section level2">
+<h2>Summary</h2>
 </div>
 
 
