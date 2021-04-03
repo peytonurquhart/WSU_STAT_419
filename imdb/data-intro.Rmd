@@ -31,7 +31,7 @@ if(which.github == "remote")
   
 } else if (which.github == "local") {
   
-    include.me = paste0( github.local, "functions/functions-owell.R");
+    include.me = paste0( github.local, "functions/functions-imdb.R");
     source(include.me);
 }
 ```
@@ -83,6 +83,8 @@ Denzel Washingtons movies.
 denzel.df <- list(movies = IMDB.getMoviesForPerson("nm0000243"), info = IMDB.getPersonInfo("nm0000243"));
 denzel.df$movies;
 denzel.df$info;
+
+test77();
 ```
 
 
