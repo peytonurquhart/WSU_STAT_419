@@ -8,14 +8,42 @@ output:
 
 ```{r, echo=FALSE}
 require("ggplot2")
+require("reticulate")
+#install.packages("C:/_git_/humanVerseWSU/humanVerseWSU_0.1.4.zip", repos=NULL, type="source");
+library(humanVerseWSU);
+#install.packages("C:/_git_/monte-imdb/imdb_0.1.1.zip", repos=NULL, type="source");
+library(imdb);
 ```
 
-```{r}
+#### Search machine for Python
+
+I couldn't get some Python packages to load.. Need to read up on virtualenv. I
+will keep the initial setup to try for the next assignment.
+
+```{r, echo=TRUE}
+reticulate::py_config();
+```
+
+#### Was Python Found ?
+
+```{r, echo=FALSE}
+if (reticulate::py_available() == FALSE)
+{
+  print("ERROR: python installation not found");
+} else {
+  print("SUCCESS: python installation found");
+}
+```
+
+```{r, echo=FALSE}
 github.local = "C:/_git_/peyton.urquhart/";
 github.remote = "https://raw.githubusercontent.com/peytonurquhart/WSU_STAT_419/main/";
 script = "functions/functions-imdb.R";
+```
 
-# change this
+#### Local or Remote ?
+
+```{r}
 which.github = "local";
 #which.github = "remote";
 ```
@@ -35,19 +63,11 @@ if(which.github == "remote")
 }
 ```
 
-```{r, chunk-setup, include=FALSE}
+```{r, chunk-setup, include=FALSE, echo=FALSE}
 # include=FALSE means it is running, but invisible ...
 knitr::opts_chunk$set(echo = TRUE);
 knitr::opts_chunk$set(warning = FALSE);
 knitr::opts_chunk$set(message = FALSE);
-```
-
-```{r}
-#install.packages("C:/_git_/humanVerseWSU/humanVerseWSU_0.1.4.zip", repos=NULL, type="source");
-library(humanVerseWSU);
-
-#install.packages("C:/_git_/monte-imdb/imdb_0.1.1.zip", repos=NULL, type="source");
-library(imdb);
 ```
 
 ```{r, chunck-loadData, include=TRUE}
@@ -93,14 +113,89 @@ resulting in a dataframe of movies starring both Will and Denzel
 findCommonMovies(will.df$movies, denzel.df$movies);
 ```
 
-
 ## Summary
 
+I wrote a higher-order filtering function to filter a dataframe by some function
+on its columns. For the following summary of genre, only rows with a recorded
+genre are included.
 
+```{r}
+# Remove all rows where there is a missing value for col #
+filterOutMissingValues = function(df, col)
+{
+  return(filterBy(df, col, (function(x) {!(is.na(x))})))
+}
+```
 
+### Genre
 
+In these pie-charts for genre, a single movie can appear multiple times in the
+chart. If the movie has tags "Action" and "Comedy" it will be counted twice.
 
+```{r, echo=FALSE}
+will.genres = filterOutMissingValues(will.df$movies, 6);
 
+gdf = buildGenresDf(will.genres);
+
+plotGenresDf(gdf, "Will Smith Movies by Genre");
+```
+
+```{r, echo=FALSE}
+denzel.genres = filterOutMissingValues(denzel.df$movies, 6);
+
+gdf = buildGenresDf(denzel.genres);
+
+plotGenresDf(gdf, "Denzel Washington Movies by Genre");
+```
+
+### MPAA Rating
+
+These pie-charts provide a visual for MPAA ratings for Will Smith / Denzel 
+Washington movies.
+
+```{r, echo=FALSE}
+will.mpaa = filterOutMissingValues(will.df$movies, 7);
+
+mdf = buildMPAADf(will.mpaa);
+
+plotMPAADf(mdf, "Will Smith MPAA Ratings");
+```
+
+```{r, echo=FALSE}
+denzel.mpaa = filterOutMissingValues(denzel.df$movies, 7);
+
+mdf = buildMPAADf(denzel.mpaa);
+
+plotMPAADf(mdf, "Denzel Washington MPAA Ratings");
+```
+
+### Average Audience Rating
+
+The average audience ratings for each actor.
+
+```{r, echo=FALSE}
+will.ratings = filterOutMissingValues(will.df$movies, 9);
+denzel.ratings = filterOutMissingValues(denzel.df$movies, 9);
+
+rdf <- as.data.frame(matrix(0, ncol = 2, nrow = 2));
+names(rdf)[1] <- "actor";
+names(rdf)[2] <- "avg.rating";
+
+rdf[1,1] <- "Will";
+rdf[2,1] <- "Denzel";
+rdf[1,2] <- (sum(will.ratings$ratings)) / nrow(will.ratings);
+rdf[2,2] <- (sum(denzel.ratings$ratings)) / nrow(denzel.ratings);
+
+rdf
+
+p <- ggplot(data=rdf, aes(x=actor, y=avg.rating, fill=avg.rating)) 
+p <- p +  geom_bar(stat="identity", position=position_dodge())
+p <- p + xlab("Actor");
+p <- p + ylab("Avg. Rating");
+p <- p + theme(legend.position="none")
+p
+
+```
 
 
 
