@@ -134,17 +134,13 @@ chart. If the movie has tags "Action" and "Comedy" it will be counted twice.
 
 ```{r, echo=FALSE}
 will.genres = filterOutMissingValues(will.df$movies, 6);
-
 gdf = buildGenresDf(will.genres);
-
 plotGenresDf(gdf, "Will Smith Movies by Genre");
 ```
 
 ```{r, echo=FALSE}
 denzel.genres = filterOutMissingValues(denzel.df$movies, 6);
-
 gdf = buildGenresDf(denzel.genres);
-
 plotGenresDf(gdf, "Denzel Washington Movies by Genre");
 ```
 
@@ -155,17 +151,13 @@ Washington movies.
 
 ```{r, echo=FALSE}
 will.mpaa = filterOutMissingValues(will.df$movies, 7);
-
 mdf = buildMPAADf(will.mpaa);
-
 plotMPAADf(mdf, "Will Smith MPAA Ratings");
 ```
 
 ```{r, echo=FALSE}
 denzel.mpaa = filterOutMissingValues(denzel.df$movies, 7);
-
 mdf = buildMPAADf(denzel.mpaa);
-
 plotMPAADf(mdf, "Denzel Washington MPAA Ratings");
 ```
 
@@ -176,36 +168,21 @@ The average audience ratings for each actor.
 ```{r, echo=FALSE}
 will.ratings = filterOutMissingValues(will.df$movies, 9);
 denzel.ratings = filterOutMissingValues(denzel.df$movies, 9);
-
 rdf <- as.data.frame(matrix(0, ncol = 2, nrow = 2));
 names(rdf)[1] <- "actor";
 names(rdf)[2] <- "avg.rating";
-
 rdf[1,1] <- "Will";
 rdf[2,1] <- "Denzel";
 rdf[1,2] <- (sum(will.ratings$ratings)) / nrow(will.ratings);
 rdf[2,2] <- (sum(denzel.ratings$ratings)) / nrow(denzel.ratings);
-
 rdf
-
 p <- ggplot(data=rdf, aes(x=actor, y=avg.rating, fill=avg.rating)) 
 p <- p +  geom_bar(stat="identity", position=position_dodge())
 p <- p + xlab("Actor");
 p <- p + ylab("Avg. Rating");
 p <- p + theme(legend.position="none")
 p
-
 ```
-
-
-
-
-
-
-
-
-
-
 
 
 

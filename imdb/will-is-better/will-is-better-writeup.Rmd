@@ -1,0 +1,177 @@
+---
+output:
+  pdf_document:
+    keep_tex: true
+    fig_caption: true
+    toc: true
+    toc_depth: 3 
+    number_sections: true
+    citation_package: natbib
+    latex_engine: pdflatex
+    template: ./../../latex-setup/report.tex
+  html_document:
+    
+    df_print: paged
+title: "Will Is Better than Denzel"
+subtitle: "An Analysis of the Career of Will Smith vs Denzel Washington"
+author: 
+- name: "Peyton Urquhart"
+  affiliation: "Student of Software Engineering (WSU)"
+keywords: |
+    data analytics; data science;
+abstract: |
+  Data from IMDB is analyzed for actors Will Smith and Denzel Washington. This
+  report aims to portray Will Smith as a better actor than Denzel Washginton.
+  The approach I found best was to contrast the financial and popular
+  careers of the actors (rather than critic/audience ratings).
+sectionnumberdepth: 3
+titleReferences: "REFERENCES"
+columnsReferences: 1
+bibliography: ./../../latex-setup/biblio/master.bib
+bibliostyle: ./../../latex-setup/biblio/ormsv080.bst
+date: "`r format(Sys.time(), '%B %d, %Y')`"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+\begin{figure}[!ht]
+ \label{fig:one-graphic}
+%% figures have hrule, tables have hline
+	\begin{center}
+	    \scalebox{1.00}{	\includegraphics{figures/Total-Box.pdf} }
+	\end{center}
+	\hrule
+	  \vspace{2mm}
+	\caption{ \textbf{All-Time Box Office Sales for Will and Denzel:} \newline \footnotesize{ Box-office revenue
+	for Will Smith's 60 most popular movies capture the vast majority of Sales in his career.\newline \newline
+	Approaching 5-billion, Will has accomplished approximately twice the revenue as Denzel washington in 
+	about 10 less years in the industry. }  }
+	\vspace{2mm}
+    \hrule
+\end{figure}
+
+\begin{figure}[!ht]
+ \label{fig:one-graphic}
+%% figures have hrule, tables have hline
+	\begin{center}
+	    \scalebox{1.00}{	\includegraphics{figures/Will-Box-By-Genre.pdf} }
+	\end{center}
+	\hrule
+	  \vspace{2mm}
+	\caption{ \textbf{Will Smith Box Office Revenue by Genre:} \newline \footnotesize{ Average box
+	office sales for each of Will Smith's movies tagged with a particular Genre on IMDB}  }
+	\vspace{2mm}
+    \hrule
+\end{figure}
+
+\begin{figure}[!ht]
+ \label{fig:one-graphic}
+%% figures have hrule, tables have hline
+	\begin{center}
+	    \scalebox{1.00}{	\includegraphics{figures/Denz-Box-By-Genre.pdf} }
+	\end{center}
+	\hrule
+	  \vspace{2mm}
+	\caption{ \textbf{Denzel Washington Box Office Revenue by Genre:} \newline \footnotesize{ Average box
+	office sales for each of Denzels's movies tagged with a particular Genre on IMDB}  }
+	\vspace{2mm}
+    \hrule
+\end{figure}
+
+\begin{figure}[!ht]
+ \label{fig:one-graphic}
+%% figures have hrule, tables have hline
+	\begin{center}
+	    \scalebox{1.00}{	\includegraphics{figures/Avg-votes.pdf} }
+	\end{center}
+	\hrule
+	  \vspace{2mm}
+	\caption{ \textbf{Average Number of IMDB Votes for Top 10 Movies:} \newline \footnotesize{ An IMDB
+	vote indicates that the user has interacted with the movie using IMDB's system. This is a measure
+	of movie popularity rather than rating.}  }
+	\vspace{2mm}
+    \hrule
+\end{figure}
+
+\section{Questions}
+\label{sec:questions}
+
+\doublespacing
+
+Denzel Washington has a slightly higher audience and critic rating across genres,
+however, actors, producers, and other members of the film industry don't put food
+on the table by receiving good reviews. Between two well-known actors, how is it 
+such that one is rated slightly higher across the board but the other performs better
+financially and achieves greater popularity? \newline
+
+\noindent Something I would like to explore is an actors ability to star in "Blockbuster"
+movies. These are movies which are exceptionally popular and financially successful.
+I will call this "Blockbuster-Ability". \newline
+
+\noindent To display this visually, I have taken the average revenue of movies for both
+actors year-by-year, starting at the beginning of their careers and ending in 2020.
+(Figure 5) Taking the yearly-average in this scenario limits the possibility for an actor
+to star in 5-or-6 "average" movies and obscure the visual when looking for the 
+existence of blockbusters. \newline
+
+\noindent The same can be said for the IMDB "votes" popularity metric year-by-year. (Figure 6)
+
+\begin{figure}[!ht]
+ \label{fig:one-graphic}
+%% figures have hrule, tables have hline
+	\begin{center}
+	    \scalebox{1.00}{	\includegraphics{figures/Blockbuster-Ability.pdf} }
+	\end{center}
+	\hrule
+	  \vspace{2mm}
+	\caption{ \textbf{Average Movie Revenue Year-by-year:} \newline \footnotesize{ The existence
+	of Blockbuster movies can be measured as the volatility of this graph}  }
+	\vspace{2mm}
+    \hrule
+\end{figure}
+
+\begin{figure}[!ht]
+ \label{fig:one-graphic}
+%% figures have hrule, tables have hline
+	\begin{center}
+	    \scalebox{1.00}{	\includegraphics{figures/Pop-Over-Time.pdf} }
+	\end{center}
+	\hrule
+	  \vspace{2mm}
+	\caption{ \textbf{Actor Popularity Year-by-year:} \newline \footnotesize{ This visual
+	can be used to view the public's interest in an actor over time}  }
+	\vspace{2mm}
+    \hrule
+\end{figure}
+
+
+\section{Conclusion}
+\label{sec:conclusion}
+
+The visuals make it clear that Will Smith is consistently able to "Knock it out
+of the park" with his performances at a greater scale then Denzel Washington. \newline
+
+\noindent The higher peaks on the visual: "Average Box Office Sales Over Time" (Figure 5)
+indicate that his performances have consistently brought more revenue on average,
+and include a greater probability for a blockbuster movie. This is re-enforced 
+(although not quite as unmistakably) in the visual "Actor Popularity Over Time" (Figure 6) \newline
+
+\noindent In Conclusion, it is clearly in the best financial interest of any 
+producer to cast Will Smith rather than Denzel Washington. In every practical
+sense, Will Smith is the better actor.
+
+
+
+
+
+
+
+
+
+
+
+
+
+

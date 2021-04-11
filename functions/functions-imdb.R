@@ -23,7 +23,84 @@ filterBy = function(df, col, lambda)
   return(ndf);
 }
 
+filterOutMissingValues = function(df, col)
+{
+  return(filterBy(df, col, (function(x) {!(is.na(x))})))
+}
+
 # MOVIES -----------------------------------------------------------------------
+# Takes the average for <col> by any given year in the range <year.min>:<year.max>
+# EX:
+# 2020: 3
+# 2020: 5
+# 2020: 1
+# 2021: 7
+# SUM? --->
+# 2020: (3+5+1)/3 = 3
+# 2021: 7/1 = 7
+# : 9, 7
+
+smoothDataOverTime = function(mdf, col, year.min = 1980, year.max = 2022, sum_=FALSE)
+{ 
+  hdf <- as.data.frame(matrix(0, ncol = 3, nrow = (year.max - year.min)));
+  names(hdf)[1] <- "year";
+  names(hdf)[2] <- "count.orig";
+  names(hdf)[3] <- "data";
+  
+  for(x in year.min:year.max)
+  {
+    hdf[x - year.min + 1,1] <- x;
+  }
+  
+  for(i in year.min:year.max)
+  {
+    idx = i - year.min + 1
+    tdf = filterBy(filterOutMissingValues(mdf, 4), 4, (function(x){(x == i)}));
+    if(!is.null(tdf))
+    {
+      tdf = filterOutMissingValues(tdf, col);
+      if(!is.null(tdf))
+      {
+        sum = 0;
+        for(x in 1:nrow(tdf))
+        {
+          sum <- sum + tdf[x,col];
+        }
+        
+        hdf[idx,3] <- sum;
+        hdf[idx,2] <- nrow(tdf);
+      }
+    }
+  }
+  
+  if(sum_==FALSE)
+  {
+    for(x in 1:nrow(hdf))
+    {
+      hdf[x,3] <- hdf[x,3] / hdf[x,2];
+    }
+  }
+  
+  xdf = filterOutMissingValues(hdf, 2)
+  xdf = filterOutMissingValues(xdf, 3)
+  xdf = filterBy(xdf, 2, (function(x) {x > 0}))
+  
+  return(xdf)
+}
+
+plotTimeData = function(w_dft, d_dft, s_ylab, s_title)
+{
+  options(scipen=999)
+  p = ggplot() + 
+    geom_line(data = w_dft, aes(x = year, y = data, colour = "Will")) +
+    geom_line(data = d_dft, aes(x = year, y = data, colour = "Denzel")) +
+    xlab('Year') +
+    ylab(s_ylab) +
+    theme(legend.title = element_blank()) +
+    ggtitle(s_title)
+  return(p);
+}
+
 
 # Return a df of movies which exist in both dataframes
 findCommonMovies = function(mdf1, mdf2)
@@ -162,6 +239,102 @@ plotMPAADf = function(gdf, s_title)
   return(p)
 }
 
+
+plotBarChartAvg = function(mdf_will, mdf_den, col, s_ylab, s_title, sum = FALSE)
+{
+  options(scipen=999)
+  will.ratings = filterOutMissingValues(mdf_will, col);
+  denzel.ratings = filterOutMissingValues(mdf_den, col);
+  
+  rdf <- as.data.frame(matrix(0, ncol = 2, nrow = 2));
+  names(rdf)[1] <- "actor";
+  names(rdf)[2] <- "avg";
+  rdf[1,1] <- "Will";
+  rdf[2,1] <- "Denzel";
+  
+  if(sum == TRUE)
+  {
+    rdf[1,2] <- (sum(will.ratings[,col]));
+    rdf[2,2] <- (sum(denzel.ratings[,col]));
+  }else
+  {
+    rdf[1,2] <- (sum(will.ratings[,col])) / nrow(will.ratings);
+    rdf[2,2] <- (sum(denzel.ratings[,col])) / nrow(denzel.ratings);
+  }
+  p <- ggplot(data=rdf, aes(x=actor, y=avg, fill=avg)) 
+  p <- p +geom_bar(stat="identity", position=position_dodge())
+  p <- p + xlab("Actor");
+  p <- p + ylab(s_ylab);
+  p <- p + theme(legend.position="none")
+  p <- p + ggtitle(s_title);
+  p
+}
+
+buildGenresAvgDf = function(df, col, sum=FALSE)
+{
+  options(scipen=999)
+  gdf <- as.data.frame(matrix(0, ncol = 3, nrow = 14));
+  names(gdf)[1] <- "genre";
+  names(gdf)[2] <- "count";
+  names(gdf)[3] <- "data";
+  
+  gdf[1,1] <- "Action"
+  gdf[2,1] <- "Adventure"
+  gdf[3,1] <- "Drama"
+  gdf[4,1] <- "Fantasy"
+  gdf[5,1] <- "Sci-Fi"
+  gdf[6,1] <- "Biography"
+  gdf[7,1] <- "Comedy"
+  gdf[8,1] <- "Romance"
+  gdf[9,1] <- "Crime"
+  gdf[10,1] <- "Thriller"
+  gdf[11,1] <- "Animation"
+  gdf[12,1] <- "Sport"
+  gdf[13,1] <- "Mystery"
+  gdf[14,1] <- "Documentary"
+  
+  for(i in 1:nrow(df))
+  {
+    for(j in 1:14)
+    {
+      if (grepl(gdf[j,1], df[i,6], fixed = TRUE))
+      {
+        gdf[j,2] <- gdf[j,2] + 1;
+        gdf[j,3] <- gdf[j,3] + df[i,col];
+      }
+    }
+  }
+  
+  if(sum == FALSE)
+  {
+    for(j in 1:14)
+    {
+      if(gdf[j,3] > 0)
+      {
+        gdf[j,3] <- gdf[j,3] / gdf[j,2];
+      }
+    }
+  }
+  
+  return(gdf);
+}
+
+plotGenresAvgDf = function(gdf, s_title, s_xlab, s_ylab, ymax = NULL)
+{
+  p <- ggplot(gdf, aes(x=genre, y=data, fill=genre));
+  p <- p +geom_bar(stat="identity", position=position_dodge())
+  p <- p + geom_bar(stat="identity", width=1, color="Black");
+  p <- p + ggtitle(s_title);
+  p <- p + xlab(s_xlab);
+  p <- p + ylab(s_ylab);
+  p <- p + theme(axis.title.x=element_blank(), axis.text.x=element_blank(), axis.ticks.x=element_blank())
+  
+  if(!is.null(ymax))
+  {
+    p <- p + coord_cartesian(ylim = c(0, ymax))
+  }
+  return(p)
+}
 
 
 
