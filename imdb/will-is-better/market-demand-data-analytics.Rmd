@@ -1,0 +1,154 @@
+---
+output:
+  pdf_document:
+    keep_tex: true
+    fig_caption: true
+    toc: true
+    toc_depth: 3 
+    number_sections: true
+    citation_package: natbib
+    latex_engine: pdflatex
+    template: ./../../latex-setup/report.tex
+  html_document:
+    
+    df_print: paged
+title: "Value proposition for the Data-analytics Program"
+subtitle: "What can we learn from market demand?"
+author: 
+- name: "Monte J. Shaffer"
+  affiliation: "Ph.D. (Marketing, WSU '11), M.S. (Statistics WSU '11), MBA (Marketing, BYU '06)"
+keywords: |
+    data analytics; data science; market demand
+abstract: |
+  University resources are limited.  As such, any program development should have a justifiable value proposition.  In this preliminary research, we explore the potential demand in the marketplace for students earning undergraduate and advanced degrees in Data Analytics.  Preliminary analysis shows that \textbf{\tt{Data analytics}} has greater job-market demand than \textbf{\tt{Data Science}} although the latter has greater google-search demand.  This data aligns with the primary objectives of the data-analytics program at Washington State University. \newline As such, we conclude that positioning our program as \textbf{\tt{Data analytics}} is a justified value proposition.
+sectionnumberdepth: 3
+titleEndnotes: "ENDNOTES"
+titleReferences: "REFERENCES"
+columnsReferences: 1
+titleTOC:  "TABLE OF CONTENTS"
+bibliography: ./../../latex-setup/biblio/master.bib
+bibliostyle: ./../../latex-setup/biblio/ormsv080.bst
+date: "`r format(Sys.time(), '%B %d, %Y')`"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+\begin{figure}[!ht]
+ \label{fig:one-graphic}
+%% figures have hrule, tables have hline
+	\begin{center}
+	    \scalebox{1.00}{	\includegraphics[trim = 0 50mm 0 5mm,clip,width=\textwidth]{figures/one.png} }
+	\end{center}
+	\hrule
+	  \vspace{2mm}
+	\caption{ \textbf{Greater market demand for `data analytics' than for `data science':} \newline \footnotesize{ We report the average number of job posting for relevant keywords from the Indeed.com website (averaged with data collected from July 14 to November 22, 2020).  \newline \newline  All results are scaled as a proportion of the top result \textbf{\tt{C++}}. We observe that \textbf{\tt{Data analysis}} (23\%) and \textbf{\tt{Data analytics}} (13\%) outperform \textbf{\tt{Data science}} (9\%) and \textbf{\tt{Data scientist}} (6\%).  \newline \newline This 2-1 outperformance may be tied to the economics that a data scientist ``expects" twice the compensation; the business community may prefer two ``moderately trained analysts with good communication skills" over one ``genius analyst with questionable communication skills."  \newline \newline [High-resolution, interactive visualization: \url{https://bit.ly/39cA1Re}]}  }
+	\vspace{2mm}
+    \hrule
+\end{figure}
+
+\section{Introduction}
+\label{sec:intro}
+
+\doublespacing
+
+In marketing theory, the value proposition is essential.  A product or offering is defined by the distinct value it can serve in the market place.  Too often, decision-makers follow a `me-too' strategy entering a hypercompetitive space rather than searching for a \emph{blue ocean of opportunity} \citep{Kim:2014}.
+
+Although a tier-one research school, and a member of the PAC-12, Washington State University (WSU) is not located in the Silicon Valley.  The students this land-grant university serves are very different than those served by California universities (e.g., Berkeley and Stanford).  A value proposition regarding a new program such as \textbf{\tt{Data analytics}} should be developed with this understanding. 
+
+WSU could follow a `me-too' strategy by identifying what Berkeley and Stanford are doing and mimicking it.  However, it may be best to learn from what they are doing and design a unique program based on the \emph{student push demand} and the \emph{market pull demand} \citep{Baloglu:1996}.  In fact, preliminary research may hint that the Berkeley and Stanford class of universities may have \emph{over-hyped and under-delivered} on the brand of \textbf{\tt{Data science}}; the market may perceive this label to mean an overpriced analyst with sub-par communications skills and not a team player.
+
+This presents a unique opportunity for WSU in this domain.  We can position our program as pragmatic, applied, and focused on developing skills our local market is demanding.  This current vision and direction of the data-analytics program are the result of the efforts put forth by the director of this nascent program.
+
+Nairanjana Dasgupta (Jan), since her appointment, has been spending countless hours on the phone talking to stakeholders in the community.  She has had conversations with key technology leaders here within the state of Washington, including, but not limited to:  Amazon, Boeing, Microsoft, T-mobile, Google, and so on.  She has also been talking to mid-size businesses to understand their needs.  The feedback being received can be summarized as:  \emph{we want young people that are: ethical, equipped with skills of the trade, able to perform quality analysis, and able to synthesis their findings into a meaningful summary.}
+
+The market place is defining the above as a \textbf{\tt{Data analyst}} which stands in contrast to a \textbf{\tt{Data scientist}}.  Albeit equipped with similar tools and skills, the primary focus of the data analyst is to be a contributing member of business unit where practical solutions are offered to data problems.
+
+As a direct result of this market feedback, Jan has been directing curriculum teams to adjust the program to meet the needs of the market and the students:  more applied courses with skill development in  data provenance, analysis, synthesis, report-writing, and visualizations.
+
+\newpage
+\section{ Data analytics Defined}
+\label{sec:da}
+
+We define the following key aspects of data analytics as:  
+
+- **collecting data and organizing it.**  Much of a data-workers job is related to cleaning and transforming the data for analysis.  This is an essential factor as effective decision making depends on quality data inputs.  The expression "Garbage In, Garbage Out" (GIGO) is all too familiar in the market place.  This job of **data provenance** is essential but far from glamorous.  Being able to document and how the data was collected, cleansed, and transformed is essential for any future replications or audits.
+
+- **analyzing the data based on business objectives.**  Business units want actionable data intelligence.  That typically means they have specific questions they would like explored.  A data analyst will review the business objects and then determine the type of exploratory and in-depth analyses to perform.
+
+- **synthesizing the analyses to evaluate what are the key findings.**  A business manager does not want thousands of pages of analysis in a report.  The manager does want to know that the detailed analysis is available and that replicable code and data have been generated; however, they want the key findings.
+
+- **communicating key findings anchor to business objectives.**  This memorandum demonstrates the type of output decision makers want: succinct summary of the analysis with one or two meaningful visualizations.
+
+The real world consists of a few larger technology players and thousands of smaller businesses.  Both groups are beginning to formulate an opinion about data science that is a bit troubling:  it is like an overpriced sports car.  Albeit glamorous, these group is a bit too theoretical as they struggle to come out of the data clouds and solve problems as directed by business units.  The market place is wanting the quantitative skills without the attitude; a team player that can communicate effectively their analysis.  A data science can be very difficult to work with.  Albeit gifted, the data scientist develops ideas/models/graphics that few can follow and may be innovative breakthroughs or a waste of time and money.
+
+A data analyst can serve as a liasion between the data scientist and the business unit.  Able to speak both languages, the data analyst can bridge the gap between the research-minded and the business objectives. 
+
+\newpage
+\section{ Demand in the Data Domain}
+\label{sec:ddd}
+
+
+\begin{figure}[!ht]
+	\label{fig:google-demand}
+%% figures have hrule, tables have hline
+	% \hrule
+	\begin{center}
+	    \scalebox{1.00}{	\includegraphics[trim = 0 0 0 0,clip,width=\textwidth]{figures/google.png} }
+	\end{center}
+		\hrule
+		\vspace{2mm}
+	\caption{ \textbf{Google Trends: Web-search Demand:} \newline \footnotesize { Web search is defined as a user going to Google and typing in a key word.  The time-series graph shows the demand for the past 5 years.  About mid-2017, \textbf{\tt{Data science}} became a hot-topic and search-demand has been trending upward since.  \textbf{\tt{Data analysis}}, on the other hand, seems to be a steady trend. \newline [Both trend lines appear to have a significant seasonal drop-off around the winter holidays.]  \newline \newline In our estimation, tied to this "hot-topic" label was a perception that there were a lot of \emph{cush jobs} out there that were high paying.  Second-tier educational platforms to increase their revenues likely feed this frenzy. \newline \newline \textbf{It is essential to emphasize that this is web-search demand, not \underline{Job Market Demand}.}  \newline [High-resolution, interactive visualization: \url{https://bit.ly/2V1pgc5}]   }  }
+    \vspace{2mm}
+    \hrule
+\end{figure}
+
+
+
+\newpage
+\section{ Demand in Marketplace}
+\label{sec:dm}
+
+Since mid July 2020, we have been tracking the pulse of the job market in the data domain.  Some hiring companies choose one website over another; some choose multiple websites.  Although there are many different job-posting websites, we identified \emph{Monster.com} and \emph{Indeed.com} as two major players with a significant reach and history.  Of those two, \emph{Indeed.com} has the fewest barriers for a small business to post a job, see (https://bit.ly/2J937X1).  If a hiring company never chooses to promote their job, the use of the website costs nothing.  \emph{Monster.com} charges a little under \$300 per job posting.  Based on this simple economics hurdle, we chose \emph{Indeed.com} for our initial analysis.  Although not comprehensive, this choice prevents possible overlap and does represent hiring companies actively seeking workers.
+
+Every week (midnight between Sunday/Monday), a scheduled script would run that would harvest the first page of results for a given keyword (e.g, \url{https://indeedhi.re/33f29za}).  This page would be collected, curated, and parsed to return the total number of jobs related to the keyword.
+
+\begin{figure}[!ht]
+	\label{fig:indeed-search}
+%% figures have hrule, tables have hline
+	% \hrule
+	\begin{center}
+	    \scalebox{1.00}{	\includegraphics[trim = 0 0 0 0,clip,width=\textwidth]{figures/indeed.png} }
+	\end{center}
+		\hrule
+		\vspace{2mm}
+	\caption{ \textbf{\emph{Indeed.com} example search:} \newline \footnotesize { In this example, (November 25), we perform a search for the exact phrase \textbf{\tt{Data analysis}}; see \url{https://indeedhi.re/33f29za}  }  }
+    \vspace{2mm}
+    \hrule
+\end{figure}
+
+Figure \ref{sec:intro} provides a summary of this counting procedure for a few months now.  With the little data we have at the moment, trending does not seem relevant so we report the average jobs counts for a relevant keyword from July 14 to November 22, 2020.  If you were to perform an exact search comparing \textbf{\tt{Data analysis}} (\url{https://indeedhi.re/33f29za}) to \textbf{\tt{Data science}} (\url{https://indeedhi.re/2J9sWpJ}) today, you would see about a 2x factor:  there are twice as many active job postings with \textbf{\tt{Data analysis}} (about 40,000) than \textbf{\tt{Data science}} (about 20,000).  
+
+\newpage
+\noindent This may be an indicator of the national economy: hiring is happening but very judiciously and frugally.  Hiring managers want a strong value proposition for a new recruit.  Two data analysts each making between \$40,000 and \$65,000 is better than one data scientist making about \$125,000.
+
+There is a bit of conjecture in this current conclusion.  It is based on qualitative data:  reading forums, manually reviewing a few job postings, talking to students actively seeking employment and so on.  As a foundation, this qualitative assessment with the preliminary job-count analysis does seem to indicate that a value proposition as put forth by the WSU data-analytics department (\textbf{\tt{Data analysis}}) is appropriate.
+
+Future research would do more than just count the jobs.  Each job application would be download, curated, and relevant factors from the job posting would be extracted:  skill requirements, expected salary, interaction of keywords, and other trends using natural-language processing and social-network analyses.  Such analysis will provide a deeper understanding of the market, and plans are in place to begin the harvesting of relevant job documents from Indeed.com in January 2021.  Such a unique data set will provide the program with ongoing insights to maintain an understanding of demand as the market evolves.  The initial harvest will be over a million job documents and the weekly update would be approximately 10,000 new jobs.  
+
+\section{Conclusion}
+\label{sec:conclusion}
+
+University resources are limited.  As such, any program development should have a justifiable value proposition.  In this preliminary research, we explore the potential demand in the marketplace for students earning undergraduate and advanced degrees in Data Analytics.  Although our current data-collection approach has its limits, data analytics appears to be something the market is demanding (more so than data science).
+
+Albeit exploratory, this preliminary conclusion may present a unique opportunity for Washington State University.  An emphasis on what the market demands: "data analysis" over "data science" (which is marketed by educational institutions as "cool" but may in fact be not well received by the market:  not enough emphasis on communication (liasion), on fundamental analytical skills (statistican over "black-box" operator), and too theoretical (not solving real-world problems grounded in business contexts). 
+
+In conclusion, we do see a value proposition for WSU if the program as properly branded as data analytics.  We can extend our understanding of these initial insights by collecting more job-related data from this same data source.  We plan on beginning that data endeavor in January 2021.
+
+
+
+
+
+
+
