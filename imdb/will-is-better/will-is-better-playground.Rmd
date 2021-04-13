@@ -14,15 +14,15 @@ library(imdb);
 
 ```{r, echo=FALSE}
 github.local = "D:/_git_/peyton.urquhart/";
-github.remote = "https://raw.githubusercontent.com/peytonurquhart/WSU_STAT_419/main/";
+github.remote = "https://raw.githubusercontent.com/peytonurquhart/WSU_STAT_419/master/";
 script = "functions/functions-imdb.R";
 ```
 
 #### Local or Remote ?
 
 ```{r}
-which.github = "local";
-#which.github = "remote";
+#which.github = "local";
+which.github = "remote";
 ```
 
 ```{r, echo=FALSE}
@@ -131,7 +131,6 @@ denz.up;
 
 ## Average number of IMDB votes (Top 10)
 ```{r, echo=FALSE}
-pdf("figures/Avg-Votes.pdf")
 ndf = plotBarChartAvg(will.top10, denz.top10, 11, "Avg Num Votes", "Popularity of Top 10 Movies")
 ndf;
 ```
@@ -142,7 +141,6 @@ ndf;
 will.box = filterOutMissingValues(will.df$movies, 12);
 denz.box = filterOutMissingValues(denzel.df$movies, 12);
 
-pdf("figures/Total-Box.pdf")
 ndf = plotBarChartAvg(will.box, denz.box, 12, "(Millions)", "Total Box Office (All Time)",sum=TRUE)
 ndf;
 ```
@@ -153,7 +151,6 @@ ndf;
 will.box = filterOutMissingValues(will.top10, 12);
 denz.box = filterOutMissingValues(denz.top10, 12);
 
-pdf("figures/Avg-Box-10.pdf")
 ndf = plotBarChartAvg(will.box, denz.box, 12, "(Millions)", "Average Box Office (Top 10 Movies)",sum=FALSE)
 ndf;
 ```
@@ -162,11 +159,9 @@ ndf;
 adf = buildGenresAvgDf(filterOutMissingValues(will.df$movies, 12), 12, sum=FALSE);
 bdf = buildGenresAvgDf(filterOutMissingValues(denzel.df$movies, 12), 12, sum=FALSE);
 
-pdf("figures/Will-Box-By-Genre.pdf")
 x = plotGenresAvgDf(adf, "Will Smith Avg. Box Office by Genre", "Genre", "(Millions)", ymax=250)
 x;
 
-pdf("figures/Denz-Box-By-Genre.pdf")
 y = plotGenresAvgDf(bdf, "Denzel Washington Avg. Box Office by Genre", "Genre", "(Millions)", ymax=250)
 y;
 
@@ -178,7 +173,6 @@ y;
 will.box.linear = smoothDataOverTime(will.df$movies, 12, sum=FALSE);
 denzel.box.linear = smoothDataOverTime(denzel.df$movies, 12, sum=FALSE);
 
-pdf("figures/Blockbuster-Ability.pdf")
 x = plotTimeData(will.box.linear, denzel.box.linear, "Millions USD", "Average Box Office Sales Over Time");
 x;
 
@@ -193,7 +187,6 @@ will.pop.linear = smoothDataOverTime(will.df$movies, 11, sum=TRUE);
 denzel.pop.linear = smoothDataOverTime(denzel.df$movies, 11, sum=TRUE);
 
 x = plotTimeData(will.pop.linear, denzel.pop.linear, "Total Votes", "Actor Popularity Over Time");
-pdf("figures/Pop-Over-Time.pdf")
 x;
 
 
