@@ -119,14 +119,6 @@ I wrote a higher-order filtering function to filter a dataframe by some function
 on its columns. For the following summary of genre, only rows with a recorded
 genre are included.
 
-```{r}
-# Remove all rows where there is a missing value for col #
-filterOutMissingValues = function(df, col)
-{
-  return(filterBy(df, col, (function(x) {!(is.na(x))})))
-}
-```
-
 ### Genre
 
 In these pie-charts for genre, a single movie can appear multiple times in the

@@ -1,6 +1,8 @@
 
 # HELPER -----------------------------------------------------------------------
 
+require(scales)
+
 # Filtering for dataframe
 filterBy = function(df, col, lambda)
 {
@@ -21,6 +23,11 @@ filterBy = function(df, col, lambda)
     }
   }
   return(ndf);
+}
+
+filterOutMissingValues = function(df, col)
+{
+  return(filterBy(df, col, (function(x) {!(is.na(x))})))
 }
 
 # MOVIES -----------------------------------------------------------------------
@@ -159,6 +166,81 @@ plotMPAADf = function(gdf, s_title)
   p <- p + coord_polar("y", start=0);
   p <- p + theme_void();
   p <- p + ggtitle(s_title);
+  return(p)
+}
+
+plotAvgAudienceRating = function(will.df, denzel.df)
+{
+  will.ratings = filterOutMissingValues(will.df$movies, 9);
+  denzel.ratings = filterOutMissingValues(denzel.df$movies, 9);
+  
+  rdf <- as.data.frame(matrix(0, ncol = 2, nrow = 2));
+  names(rdf)[1] <- "actor";
+  names(rdf)[2] <- "avg.rating";
+  
+  rdf[1,1] <- "Will";
+  rdf[2,1] <- "Denzel";
+  rdf[1,2] <- (sum(will.ratings$ratings)) / nrow(will.ratings);
+  rdf[2,2] <- (sum(denzel.ratings$ratings)) / nrow(denzel.ratings);
+  
+  rdf
+  
+  p <- ggplot(data=rdf, aes(x=actor, y=avg.rating, fill=avg.rating)) 
+  p <- p +  geom_bar(stat="identity", position=position_dodge())
+  p <- p + xlab("Actor");
+  p <- p + ylab("Avg. Rating");
+  p <- p + theme(legend.position="none")
+  return(p)
+}
+
+plotAvgVotes = function(will.df, denzel.df)
+{
+  will.votes = filterOutMissingValues(will.df$movies, 11);
+  denzel.votes = filterOutMissingValues(denzel.df$movies, 11);
+  
+  rdf <- as.data.frame(matrix(0, ncol = 2, nrow = 2));
+  names(rdf)[1] <- "actor";
+  names(rdf)[2] <- "avg.votes";
+  
+  rdf[1,1] <- "Will";
+  rdf[2,1] <- "Denzel";
+  rdf[1,2] <- (sum(will.votes$votes)) / nrow(will.votes);
+  rdf[2,2] <- (sum(denzel.votes$votes)) / nrow(denzel.votes);
+  
+  rdf
+  
+  p <- ggplot(data=rdf, aes(x=actor, y=avg.votes, fill=avg.votes)) 
+  p <- p +  geom_bar(stat="identity", position=position_dodge())
+  p <- p + xlab("Actor");
+  p <- p + ylab("Avg. Votes");
+  p <- p + theme(legend.position="none")
+  options(scipen=10000000)
+  return(p)
+}
+
+
+plotBoxOffice = function(will.df, denzel.df)
+{
+  will.box = filterOutMissingValues(will.df$movies, 12);
+  denzel.box = filterOutMissingValues(denzel.df$movies, 12);
+  
+  rdf <- as.data.frame(matrix(0, ncol = 2, nrow = 2));
+  names(rdf)[1] <- "actor";
+  names(rdf)[2] <- "avg.box";
+  
+  rdf[1,1] <- "Will";
+  rdf[2,1] <- "Denzel";
+  rdf[1,2] <- (sum(will.box$millons)) / nrow(will.box);
+  rdf[2,2] <- (sum(denzel.box$millions)) / nrow(denzel.box);
+  
+  rdf
+  
+  p <- ggplot(data=rdf, aes(x=actor, y=avg.box, fill=avg.box)) 
+  p <- p +  geom_bar(stat="identity", position=position_dodge())
+  p <- p + xlab("Actor");
+  p <- p + ylab("Avg. Profit (Millions)");
+  p <- p + theme(legend.position="none")
+  options(scipen=10000000)
   return(p)
 }
 
