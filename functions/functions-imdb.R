@@ -28,6 +28,12 @@ filterOutMissingValues = function(df, col)
   return(filterBy(df, col, (function(x) {!(is.na(x))})))
 }
 
+addEmptyCol = function(df)
+{
+  df <- cbind(df, CPI = 0);
+  return(df);
+}
+
 # MOVIES -----------------------------------------------------------------------
 # Takes the average for <col> by any given year in the range <year.min>:<year.max>
 # EX:
