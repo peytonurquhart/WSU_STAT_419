@@ -1,4 +1,4 @@
-
+library("quantmod");
 # HELPER -----------------------------------------------------------------------
 
 # Filtering for dataframe
@@ -23,18 +23,90 @@ filterBy = function(df, col, lambda)
   return(ndf);
 }
 
+# Filter out all NA values for a column
 filterOutMissingValues = function(df, col)
 {
   return(filterBy(df, col, (function(x) {!(is.na(x))})))
 }
 
-addEmptyCol = function(df)
+# Add an empty column to a dataframe called s.newname filled with default.value
+addEmptyCol = function(df, s.newname, default.value = NA)
 {
-  df <- cbind(df, CPI = 0);
+  df <- cbind(df, new___col___ = default.value);
+  names(df)[ncol(df)] <- s.newname;
   return(df);
 }
 
+# Gets CPI data from 1947 - 2021
+getCPIData = function(s.baseyear="2021")
+{
+  getSymbols("CPIAUCSL", src='FRED'); #Consumer Price Index
+  tail(CPIAUCSL);
+  set.seed(1);
+  p <- xts(rnorm(63, mean=10, sd=3), seq(from=as.Date('1950-12-01'), by='years', length.out=63));
+  colnames(p) <- "price";
+  avg.cpi <- apply.yearly(CPIAUCSL, mean);
+  names(avg.cpi)[1] <- "CPI";
+  cf <- avg.cpi/as.numeric(avg.cpi[s.baseyear]);
+  cf <- addEmptyCol(cf, "year", 0);
+  for(x in 1:nrow(cf))
+  {
+    cf[x,2] <- (x+1946);
+  }
+  return(cf);
+}
+
+# Apply inflation to a dollar amount from.year. Only accurate 1947-1921
+applyInflationToUSD = function(amount, from.year, s.baseyear="2021", cpi_data=NULL)
+{
+  if(from.year < 1947)
+  {
+    from.year = 1947;
+  }
+  if(from.year > 2021)
+  {
+    from.year = 2021;
+  }
+  
+  if(is.null(cpi_data))
+  {
+    cf = getCPIData(s.baseyear);
+  } else {
+    cf <- cpi_data;
+  }
+  
+  for(x in 1:nrow(cf))
+  {
+    if(cf[x,2] == from.year)
+    {
+      i_a = (amount/(cf[x,1]));
+      return(as.numeric(i_a));
+    }
+  }
+  stop("Error in applyInflationToUSD");
+}
+
+
 # MOVIES -----------------------------------------------------------------------
+
+
+adjustForInflation = function(mdf, s.baseyear="2021")
+{
+  cf = getCPIData(s.baseyear);
+  for(x in 1:nrow(mdf))
+  {
+    if(!is.na(mdf[x,4]))
+    {
+      if(!is.na(mdf[x,12]))
+      {
+        mdf[x,12] <- applyInflationToUSD(as.numeric(mdf[x,12]), as.numeric(mdf[x,4]), s.baseyear, cf);
+      }
+    }
+  }
+  
+  return(mdf);
+}
+
 # Takes the average for <col> by any given year in the range <year.min>:<year.max>
 # EX:
 # 2020: 3

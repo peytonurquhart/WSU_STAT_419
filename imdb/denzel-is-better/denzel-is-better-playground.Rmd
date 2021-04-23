@@ -1,5 +1,5 @@
 ---
-title: 'Will is Better Playground'
+title: 'Denzel is Better Playground'
 author: "Peyton Urquhart [peyton.urquhart]"
 output:
   html_document:
@@ -7,13 +7,14 @@ output:
 ---
 
 ```{r, echo=FALSE}
-require("ggplot2")
+suppressWarnings(suppressMessages(require("ggplot2")));
+suppressWarnings(suppressMessages(require("quantmod")));
 library(humanVerseWSU);
 library(imdb);
 ```
 
 ```{r, echo=FALSE}
-github.local = "D:/_git_/peyton.urquhart/";
+github.local = "C:/_git_/peyton.urquhart/";
 github.remote = "https://raw.githubusercontent.com/peytonurquhart/WSU_STAT_419/master/";
 script = "functions/functions-imdb.R";
 ```
@@ -21,8 +22,8 @@ script = "functions/functions-imdb.R";
 #### Local or Remote ?
 
 ```{r}
-#which.github = "local";
-which.github = "remote";
+which.github = "local";
+#which.github = "remote";
 ```
 
 ```{r, echo=FALSE}
@@ -62,9 +63,13 @@ num.movies = 60;
 ```{r, echo=FALSE}
 will.df <- list(movies = IMDB.getMoviesForPerson("nm0000226"), info = IMDB.getPersonInfo("nm0000226"));
 will.df$movies <- filterBy(filterOutMissingValues(will.df$movies, 3), 3, (function(x){(x < num.movies + 1)}));
-will.df$movies <- addEmptyCol(will.df$movies);
-will.df$movies;
 will.df$info;
+```
+
+```{r, echo=TRUE}
+# Adjust to represent '2021 US Dollars'
+will.df$movies <- adjustForInflation(will.df$movies, "2021");
+will.df$movies;
 ```
 
 ## Denzel Washington (num.movies)
@@ -72,9 +77,19 @@ will.df$info;
 ```{r, echo=FALSE}
 denzel.df <- list(movies = IMDB.getMoviesForPerson("nm0000243"), info = IMDB.getPersonInfo("nm0000243"));
 denzel.df$movies <- filterBy(filterOutMissingValues(denzel.df$movies, 3), 3, (function(x){(x < num.movies + 1)}));
-denzel.df$movies;
 denzel.df$info;
 ```
+
+```{r, echo=TRUE}
+# Adjust to represent '2021 US Dollars'
+denzel.df$movies <- adjustForInflation(denzel.df$movies, "2021");
+denzel.df$movies;
+```
+
+
+
+
+
 
 # Playground
 
@@ -160,10 +175,10 @@ ndf;
 adf = buildGenresAvgDf(filterOutMissingValues(will.df$movies, 12), 12, sum=FALSE);
 bdf = buildGenresAvgDf(filterOutMissingValues(denzel.df$movies, 12), 12, sum=FALSE);
 
-x = plotGenresAvgDf(adf, "Will Smith Avg. Box Office by Genre", "Genre", "(Millions)", ymax=250)
+x = plotGenresAvgDf(adf, "Will Smith Avg. Box Office by Genre", "Genre", "(Millions)", ymax=400)
 x;
 
-y = plotGenresAvgDf(bdf, "Denzel Washington Avg. Box Office by Genre", "Genre", "(Millions)", ymax=250)
+y = plotGenresAvgDf(bdf, "Denzel Washington Avg. Box Office by Genre", "Genre", "(Millions)", ymax=400)
 y;
 
 ```
