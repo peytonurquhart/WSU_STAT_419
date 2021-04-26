@@ -87,10 +87,6 @@ denzel.df$movies;
 ```
 
 
-
-
-
-
 # Playground
 
 ## Average Audience Rating
@@ -102,114 +98,85 @@ ndf = plotBarChartAvg(will.df$movies, denzel.df$movies, 9, "Avg. Rating", "Avera
 ndf;
 ```
 
-
 ## Top 10 Movies
-#### Will
-```{r, echo=FALSE}
+Get the top 10 movies by rank for both actors.
+```{r}
 will.top10 = filterBy(filterOutMissingValues(will.df$movies, 3), 3, (function(x){(x < 11)}));
-will.top10;
-```
-#### Denzel
-```{r, echo=FALSE}
 denz.top10 = filterBy(filterOutMissingValues(denzel.df$movies, 3), 3, (function(x){(x < 11)}));
-denz.top10;
 ```
 
-
-## The Last 15 Years (Since 2006)
-#### Will
-```{r, echo=FALSE}
+## The Last 15 Years
+Get all movies in the last 15 years for both actors.
+```{r, echo}
 will.recent = filterBy(filterOutMissingValues(will.df$movies, 4), 4, (function(x){(x > 2005)}));
-will.recent;
-```
-#### Denzel
-```{r, echo=FALSE}
 denz.recent = filterBy(filterOutMissingValues(denzel.df$movies, 4), 4, (function(x){(x > 2005)}));
-denz.recent;
 ```
 
-
-### How many of the top 10 were in the last 15 years?
-
-This will be explained with blockbuster-ability
-
-#### Will
-```{r, echo=FALSE}
+## How Many of the Top 10 were in the Last 15 Years?
+Get all movies within the last 15 years which are ranked in the top 10 for both actors.
+```{r}
 will.up = filterBy(filterOutMissingValues(will.top10, 4), 4, (function(x){(x > 2005)}));
-will.up;
-```
-#### Denzel
-```{r, echo=FALSE}
 denz.up = filterBy(filterOutMissingValues(denz.top10, 4), 4, (function(x){(x > 2005)}));
-denz.up;
 ```
 
-
-## Average number of IMDB votes (Top 10)
+## Average Audience Ratings By Genre
 ```{r, echo=FALSE}
-ndf = plotBarChartAvg(will.top10, denz.top10, 11, "Avg Num Votes", "Popularity of Top 10 Movies")
-ndf;
-```
+adf = buildGenresAvgDf(filterOutMissingValues(will.df$movies, 9), 9, sum=FALSE);
+bdf = buildGenresAvgDf(filterOutMissingValues(denzel.df$movies, 9), 9, sum=FALSE);
+adf <- removeRow(adf,11);
+bdf <- removeRow(bdf,11);
+adf <- removeRow(adf,4);
+bdf <- removeRow(bdf,4);
 
-## Total Box Office (All time)
-
-```{r, echo=FALSE}
-will.box = filterOutMissingValues(will.df$movies, 12);
-denz.box = filterOutMissingValues(denzel.df$movies, 12);
-
-ndf = plotBarChartAvg(will.box, denz.box, 12, "(Millions)", "Total Box Office (All Time)",sum=TRUE)
-ndf;
-```
-
-## Average Box Office (Top 10)
-
-```{r, echo=FALSE}
-will.box = filterOutMissingValues(will.top10, 12);
-denz.box = filterOutMissingValues(denz.top10, 12);
-
-ndf = plotBarChartAvg(will.box, denz.box, 12, "(Millions)", "Average Box Office (Top 10 Movies)",sum=FALSE)
-ndf;
-```
-
-```{r, echo=FALSE}
-adf = buildGenresAvgDf(filterOutMissingValues(will.df$movies, 12), 12, sum=FALSE);
-bdf = buildGenresAvgDf(filterOutMissingValues(denzel.df$movies, 12), 12, sum=FALSE);
-
-x = plotGenresAvgDf(adf, "Will Smith Avg. Box Office by Genre", "Genre", "(Millions)", ymax=400)
+x <- plotGenresAvgDf(adf, "Will Smith Avg. Audience Rating By Genre", "Genre", "Rating", ymax=8, ymin=5)
 x;
+ggsave("figures/will-avg-aud.pdf");
 
-y = plotGenresAvgDf(bdf, "Denzel Washington Avg. Box Office by Genre", "Genre", "(Millions)", ymax=400)
+y <- plotGenresAvgDf(bdf, "Denzel Washington Avg. Audience Rating By Genre", "Genre", "Rating", ymax=8, ymin=5)
 y;
+ggsave("figures/denzel-avg-aud.pdf");
+#ggexport(y, filename = "figures/denzel-avg-audience");
+
+# Prepare for pie charts
+a.ratings <- cbind(adf, bdf[,3]);
+names(a.ratings)[3] <- "will.ratings";
+names(a.ratings)[4] <- "denzel.ratings";
+a.ratings <- a.ratings[-c(2)];
+a.ratings <- prepareBinaryPieChartDf(a.ratings, 2, 3, "will.percent", "denzel.percent");
+a.ratings;
 
 ```
 
-## Blockbuster-ability
-
+## Average Critic Ratings By Genre
 ```{r, echo=FALSE}
-will.box.linear = smoothDataOverTime(will.df$movies, 12, sum=FALSE);
-denzel.box.linear = smoothDataOverTime(denzel.df$movies, 12, sum=FALSE);
+adf = buildGenresAvgDf(filterOutMissingValues(will.df$movies, 10), 10, sum=FALSE);
+bdf = buildGenresAvgDf(filterOutMissingValues(denzel.df$movies, 10), 10, sum=FALSE);
+adf <- removeRow(adf,11);
+bdf <- removeRow(bdf,11);
+adf <- removeRow(adf,4);
+bdf <- removeRow(bdf,4);
 
-x = plotTimeData(will.box.linear, denzel.box.linear, "Millions USD", "Average Box Office Sales Over Time");
-x;
+plotGenresAvgDf(adf, "Will Smith Avg. Critic Rating By Genre", "Genre", "Rating", ymax=75, ymin=40)
 
+plotGenresAvgDf(bdf, "Denzel Washington Avg. Critic Rating By Genre", "Genre", "Rating", ymax=75, ymin=40)
+
+# Prepare for pie charts
+c.ratings <- cbind(adf, bdf[,3]);
+names(c.ratings)[3] <- "will.ratings";
+names(c.ratings)[4] <- "denzel.ratings";
+c.ratings <- c.ratings[-c(2)];
+c.ratings <- prepareBinaryPieChartDf(c.ratings, 2, 3, "will.percent", "denzel.percent");
+c.ratings;
 
 ```
 
-## Popularity Over Time
-
+## Final "One Graphic"
+#### Will-v-Denzel Average Critic Ratings by Genre
 ```{r, echo=FALSE}
-
-will.pop.linear = smoothDataOverTime(will.df$movies, 11, sum=TRUE);
-denzel.pop.linear = smoothDataOverTime(denzel.df$movies, 11, sum=TRUE);
-
-x = plotTimeData(will.pop.linear, denzel.pop.linear, "Total Votes", "Actor Popularity Over Time");
-x;
-
-
+g = oneGraphicDenzel(c.ratings);
+g;
+ggexport(g, filename = "figures/1graphic.pdf")
 ```
-
-
-
 
 
 

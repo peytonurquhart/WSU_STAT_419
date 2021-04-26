@@ -1,4 +1,6 @@
 library("quantmod");
+library(dplyr);
+library("ggpubr");
 # HELPER -----------------------------------------------------------------------
 
 # Filtering for dataframe
@@ -37,6 +39,13 @@ addEmptyCol = function(df, s.newname, default.value = NA)
   return(df);
 }
 
+# Remove a row from a dataframe
+removeRow = function(df, num.row)
+{
+  ndf <- df[-c(num.row),];
+  return(ndf);
+}
+
 # Gets CPI data from 1947 - 2021
 getCPIData = function(s.baseyear="2021")
 {
@@ -56,7 +65,7 @@ getCPIData = function(s.baseyear="2021")
   return(cf);
 }
 
-# Apply inflation to a dollar amount from.year. Only accurate 1947-1921
+# Apply inflation to a dollar amount from.year. Only accurate 1947-2021
 applyInflationToUSD = function(amount, from.year, s.baseyear="2021", cpi_data=NULL)
 {
   if(from.year < 1947)
@@ -84,6 +93,22 @@ applyInflationToUSD = function(amount, from.year, s.baseyear="2021", cpi_data=NU
     }
   }
   stop("Error in applyInflationToUSD");
+}
+
+# Prepares a binary (2 variable) pie chart datafrom
+  # Averages across: nrow_1, nrow_@
+  # Inserts new columns: s_name1, s_name2
+prepareBinaryPieChartDf = function(df, n_row1 = 2, n_row2 = 3, s_name1, s_name2)
+{
+  r.initial = as.numeric(ncol(df));
+  df <- addEmptyCol(df, s_name1, NA);
+  df <- addEmptyCol(df, s_name2, NA);
+  for (x in 1:nrow(df))
+  {
+    df[x,(r.initial + 1)] <- as.numeric(df[x,n_row1] / (df[x,n_row1] + df[x,n_row2]));
+    df[x,(r.initial + 2)] <- as.numeric(df[x,n_row2] / (df[x,n_row1] + df[x,n_row2]));
+  }
+  return(df);
 }
 
 
@@ -397,7 +422,7 @@ buildGenresAvgDf = function(df, col, sum=FALSE)
   return(gdf);
 }
 
-plotGenresAvgDf = function(gdf, s_title, s_xlab, s_ylab, ymax = NULL)
+plotGenresAvgDf = function(gdf, s_title, s_xlab, s_ylab, ymax = NULL, ymin = NULL)
 {
   p <- ggplot(gdf, aes(x=genre, y=data, fill=genre));
   p <- p +geom_bar(stat="identity", position=position_dodge())
@@ -407,14 +432,92 @@ plotGenresAvgDf = function(gdf, s_title, s_xlab, s_ylab, ymax = NULL)
   p <- p + ylab(s_ylab);
   p <- p + theme(axis.title.x=element_blank(), axis.text.x=element_blank(), axis.ticks.x=element_blank())
   
+  if((!is.null(ymin)) && (!is.null(ymax)))
+  {
+    p <- p + coord_cartesian(ylim = c(ymin, ymax))
+    return(p);
+  }
+
   if(!is.null(ymax))
   {
     p <- p + coord_cartesian(ylim = c(0, ymax))
+    return(p);
   }
-  return(p)
+  return(p);
 }
 
+plotBinaryPieChartByRow = function(df, n_row, d_color = "#4CA64C", w_color = "#163116")
+{
+  p.df = as.data.frame(matrix(0, ncol = 5, nrow = 2));
+  names(p.df)[1] = "Actor";
+  names(p.df)[2] = "Percent";
+  names(p.df)[3] = "DisplayPercent";
+  names(p.df)[4] = "Color";
+  names(p.df)[5] = "Rating";
+  p.df[1,1] <- "Will";
+  p.df[2,1] <- "Denzel";
+  p.df[1,2] <- df[n_row, 4];
+  p.df[2,2] <- df[n_row, 5];
+  p.df[1,3] <- paste0(substr(paste0(df[n_row, 4]*100,""),1,4),"%");
+  p.df[2,3] <- paste0(substr(paste0(df[n_row, 5]*100,""),1,4),"%");
+  p.df[1,4] <- w_color;
+  p.df[2,4] <- d_color;
+  p.df[1,5] <- substr(paste0(df[n_row, 2],""),1,4);
+  p.df[2,5] <- substr(paste0(df[n_row, 3], ""),1,4);
+  
+  p.df <- p.df %>% 
+    arrange(desc(Actor)) %>%
+    mutate(prop = Percent / sum(p.df$Percent) *100) %>%
+    mutate(ypos = cumsum(prop)- 0.5*prop )
+  
+  p = ggplot(p.df, aes(x="", y=prop, fill=Actor));
+  p <- p + geom_bar(stat="identity", width=1);
+  p <-  p + coord_polar("y", start=0);
+  p <- p + theme_void();
+  p <- p + theme(legend.position="none");
+  p <- p + geom_text(aes(y = ypos, label = Rating), color = "white", size=4);
+  p <- p + scale_fill_manual(values=c(d_color, w_color));
+  return(p);
+}
 
+oneGraphicDenzel = function(c.ratings)
+{
+  a = plotBinaryPieChartByRow(c.ratings, 1);
+  b = plotBinaryPieChartByRow(c.ratings, 2, "#FF4C4C", "#4C1616");
+  c = plotBinaryPieChartByRow(c.ratings, 3);
+  d = plotBinaryPieChartByRow(c.ratings, 4);
+  e = plotBinaryPieChartByRow(c.ratings, 5);
+  f = plotBinaryPieChartByRow(c.ratings, 6);
+  g = plotBinaryPieChartByRow(c.ratings, 7);
+  h = plotBinaryPieChartByRow(c.ratings, 8);
+  i = plotBinaryPieChartByRow(c.ratings, 9);
+  j = plotBinaryPieChartByRow(c.ratings, 10);
+  k = plotBinaryPieChartByRow(c.ratings, 11);
+  l = plotBinaryPieChartByRow(c.ratings, 12, "#FF4C4C", "#4C1616");
+  
+  graphic <- ggarrange(g,k,d,i,c,h,a,j,f,e,b,l, 
+                      labels = c("Romance", 
+                                 "Mystery", 
+                                 "Sci-Fi", 
+                                 "Thriller", 
+                                 "Drama", 
+                                 "Crime", 
+                                 "Action", 
+                                 "Sport", 
+                                 "Comedy", 
+                                 "Biography", 
+                                 "Adventure", 
+                                 "Documentary"), 
+                      font.label = list(size = 10,
+                                        color = "black",
+                                        face = "bold",
+                                        family = NULL),
+                      ncol = 4, 
+                      nrow = 3,
+                      common.legend=TRUE,
+                      legend = "bottom");
+  return(graphic);
+}
 
 
 
